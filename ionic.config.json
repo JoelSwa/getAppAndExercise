@@ -1,5 +1,7 @@
 {
   "name": "getAppAndExercise",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
