@@ -1,8 +1,10 @@
 /* tslint:disable */
 import {Component, Injectable} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
-import {User} from './User';
-import {isFocused} from '@ionic/core/dist/types/utils/input-shims/hacks/common';
+import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular/common/http';
+import {NavController} from '@ionic/angular';
+import {catchError, map, timeout} from 'rxjs/operators';
+import {throwError, TimeoutError} from 'rxjs';
+
 
 @Component({
     selector: 'app-home',
@@ -12,7 +14,10 @@ import {isFocused} from '@ionic/core/dist/types/utils/input-shims/hacks/common';
 @Injectable()
 export class HomePage {
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private navCtrl: NavController
+    ) {
     }
 
     data: any;
@@ -53,29 +58,28 @@ export class HomePage {
             username: this.usernameInput,
             password: this.passwordInput
         });
-        this.http.request(req).subscribe((res: HttpResponse<any>) => {
-            console.log('res.status === ' + res.status);
-            //Switch-sats för fan
-            if (res.status) {
-                console.log('res.status.toString() : ' + res.status.toString());
-                console.log('res.type : ' + res.type);
-                console.log('res.ok : ' + res.ok);
-                console.log('res.headers.get(\'content-type\') : ' + res.headers.get('content-type'));
-                // let user: User = res.body;
-                // alert('Welcome ' + user.username + "!");
-            }
-            // if (res.status === 400) {
-            //     alert('Wrong password (or empty field?)');
-            // }
-            // if (res.status === 404) {
-            //     alert('User not found');
-            // }
-            // if (res.status === 500) {
-            //     alert('Internal server error');
-            // }
-            // if (res.status) {
-            //     alert('Status ' + res.status);
-            // }
-        });
+        this.http.request(req).pipe(
+            timeout(7000),
+            map((response: any) => {
+                return response;
+            }),
+            catchError(err => {
+                if (err instanceof TimeoutError) {
+                    alert('Connection to server timed out');
+                    return throwError('Timeout Exception');
+                }
+                return throwError(err);
+            })
+        ).subscribe((res: HttpResponse<any>) => {
+                if (res.status === 202) {
+                    alert('Welcome ' + res.body.username + '!');
+                    this.navCtrl.navigateForward('list');
+                }
+            }, (error: HttpErrorResponse) => {
+                if (error.status && error.error) {
+                    alert(error.error);
+                }
+                console.error(error);
+            });
     }
 }
