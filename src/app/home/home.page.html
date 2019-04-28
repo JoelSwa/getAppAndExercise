@@ -16,8 +16,12 @@
             <ion-card-subtitle>Välkommen!</ion-card-subtitle>
             <ion-card-title>Logga in nedan</ion-card-title>
         </ion-card-header>
-        <ion-input id="usernameField" placeholder="Användarnamn" clearInput="true" [(ngModel)]="usernameInput" (keydown)="onEnterClick($event)"></ion-input>
-        <ion-input id="passwordField" placeholder="Lösenord" clearInput="true" type="password"[(ngModel)]="passwordInput" (keydown)="onEnterClick($event)"></ion-input>
-        <ion-button id="logInButton" (click)="logIn()">Logga in</ion-button>
+        <ion-input id="usernameField" placeholder="Användarnamn" clearInput="true" [(ngModel)]="usernameInput"
+                   (keydown)="onEnterClick($event)"></ion-input>
+        <ion-input id="passwordField" placeholder="Lösenord" clearInput="true" type="password" clearOnEdit="false"
+                   [(ngModel)]="passwordInput" (keydown)="onEnterClick($event)"></ion-input>
+        <ion-button id="logInButton" (click)="logIn()">Logga in&nbsp;&nbsp;&nbsp;
+            <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+        </ion-button>
     </ion-card>
 </ion-content>

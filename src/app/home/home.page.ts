@@ -20,57 +20,73 @@ export class HomePage {
     ) {
     }
 
+    awaitingResponse: boolean = false;
     data: any;
     usernameInput: string = '';
     passwordInput: string = '';
 
     public onEnterClick(event) {
         if (event.key === 'Enter') {
-            let usernameField = <HTMLIonInputElement> document.getElementById('usernameField');
-            let passwordField = <HTMLIonInputElement> document.getElementById('passwordField');
-            let logInButton = <HTMLIonButtonElement> document.getElementById('logInButton');
+            if (!this.awaitingResponse) {
+                let usernameField = <HTMLIonInputElement> document.getElementById('usernameField');
+                let passwordField = <HTMLIonInputElement> document.getElementById('passwordField');
+                let logInButton = <HTMLIonButtonElement> document.getElementById('logInButton');
 
-            let passwordLength = this.passwordInput.length;
-            let usernameLength = this.usernameInput.length;
+                let passwordLength = this.passwordInput.length;
+                let usernameLength = this.usernameInput.length;
 
-            if (usernameLength > 0) {
-                if (passwordLength > 0) {
-                    logInButton.click();
-                    return;
-                }
-                passwordField.setFocus();
-                return;
-            }
-
-            if (passwordLength > 0) {
                 if (usernameLength > 0) {
-                    logInButton.click();
+                    if (passwordLength > 0) {
+                        this.focusOut();
+                        logInButton.click();
+                        return;
+                    }
+                    passwordField.setFocus();
                     return;
                 }
-                usernameField.setFocus();
-                return;
+
+                if (passwordLength > 0) {
+                    if (usernameLength > 0) {
+                        this.focusOut();
+                        logInButton.click();
+                        return;
+                    }
+                    usernameField.setFocus();
+                    return;
+                }
             }
         }
     }
 
+    private focusOut() {
+        let activeElement = <HTMLIonInputElement> document.activeElement;
+        activeElement && activeElement.blur && activeElement.blur();
+    }
+
     public logIn() {
-        let req = new HttpRequest('POST', 'http://192.168.1.71:8080/users/login', {
-            username: this.usernameInput,
-            password: this.passwordInput
-        });
-        this.http.request(req).pipe(
-            timeout(7000),
-            map((response: any) => {
-                return response;
-            }),
-            catchError(err => {
-                if (err instanceof TimeoutError) {
-                    alert('Connection to server timed out');
-                    return throwError('Timeout Exception');
-                }
-                return throwError(err);
-            })
-        ).subscribe((res: HttpResponse<any>) => {
+        if (!this.awaitingResponse) {
+            let req = new HttpRequest('POST', 'http://192.168.1.71:8080/users/login', {
+                username: this.usernameInput,
+                password: this.passwordInput
+            });
+            setTimeout(() => {
+                this.awaitingResponse = true;
+            }, 0);
+            this.http.request(req).pipe(
+                timeout(7000),
+                map((response: any) => {
+                    this.awaitingResponse = false;
+                    return response;
+                }),
+                catchError(err => {
+                    this.awaitingResponse = false;
+                    if (err instanceof TimeoutError) {
+                        alert('Connection to server timed out');
+                        return throwError('Timeout Exception');
+                    }
+                    return throwError(err);
+                })
+            ).subscribe((res: HttpResponse<any>) => {
                 if (res.status === 202) {
                     alert('Welcome ' + res.body.username + '!');
                     this.navCtrl.navigateForward('list');
@@ -81,5 +97,6 @@ export class HomePage {
                 }
                 console.error(error);
             });
+        }
     }
 }
