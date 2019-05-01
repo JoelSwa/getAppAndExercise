@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { ListPage } from './list.page';
-import {MapComponent} from '../map/map.component';
-import {GeofenceService} from '../service/geofence/geofence.service';
+import {MapComponent} from '../../component/map/map.component';
+import {GeofenceService} from '../../service/geofence/geofence.service';
 import {Geofence} from '@ionic-native/geofence/ngx';
 
 @NgModule({

@@ -1,6 +1,6 @@
 /* tslint:disable */
 import {Component, OnInit} from '@angular/core';
-import {GeofenceService} from '../service/geofence/geofence.service';
+import {GeofenceService} from '../../service/geofence/geofence.service';
 
 @Component({
     selector: 'app-list',

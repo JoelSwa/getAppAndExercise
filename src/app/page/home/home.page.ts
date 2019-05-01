@@ -65,6 +65,7 @@ export class HomePage {
 
     public logIn() {
 
+            //shortcut for testing purposes
         if (this.usernameInput === 'm' && this.passwordInput === 'm') {
             this.navCtrl.navigateForward('list');
         } else {
