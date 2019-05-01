@@ -4,24 +4,23 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Get app and exercise!
+            App and exercise!
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card class="welcome-card">
-        <ion-img src="/assets/skyline.png"></ion-img>
-        <ion-card-header>
-            <ion-card-subtitle>Welcome!</ion-card-subtitle>
-            <ion-card-title>Log in or register</ion-card-title>
-        </ion-card-header>
-        <ion-input id="usernameField" placeholder="Username" clearInput="true" [(ngModel)]="usernameInput"
-                   (keydown)="onEnterClick($event)"></ion-input>
-        <ion-input id="passwordField" placeholder="Password" clearInput="true" type="password" clearOnEdit="false"
-                   [(ngModel)]="passwordInput" (keydown)="onEnterClick($event)"></ion-input>
-        <ion-button id="logInButton" (click)="logIn()">Log in&nbsp;&nbsp;&nbsp;
-            <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
-        </ion-button>
+<ion-content class="card-background-page">
+
+    <ion-card (click)="navigateToRegionList()">
+        <img src="assets/img/region.png"/>
+        <div class="card-title">Regions</div>
+        <div class="card-subtitle">View and add regions</div>
     </ion-card>
+
+    <ion-card (click)="navigateToLocationList()">
+        <img src="assets/img/location.png"/>
+        <div class="card-title">Locations</div>
+        <div class="card-subtitle">View and add specific locations</div>
+    </ion-card>
+
 </ion-content>

@@ -3,36 +3,13 @@ import {Component, OnInit} from '@angular/core';
 import {GeofenceService} from '../../service/geofence/geofence.service';
 
 @Component({
-    selector: 'app-list',
-    templateUrl: 'list.page.html',
-    styleUrls: ['list.page.scss']
+    selector: 'app-location-new',
+    templateUrl: './location-new.page.html',
+    styleUrls: ['./location-new.page.scss'],
 })
-export class ListPage implements OnInit {
-    private selectedItem: any;
-    private icons = [
-        'flask',
-        'wifi',
-        'beer',
-        'football',
-        'basketball',
-        'paper-plane',
-        'american-football',
-        'boat',
-        'bluetooth',
-        'build'
-    ];
-    public items: Array<{ title: string; note: string; icon: string }> = [];
+export class LocationNewPage implements OnInit {
 
     constructor(private geofenceService: GeofenceService) {
-
-        this.geofenceService.init();
-        // for (let i = 0; i < 3; i++) {
-        //     this.items.push({
-        //         title: 'Item ' + i,
-        //         note: 'This is item #' + i,
-        //         icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-        //     });
-        // }
     }
 
     private lat: number;
@@ -74,19 +51,14 @@ export class ListPage implements OnInit {
     }
 
     private saveGeofence() {
-        this.awaitingResponse = true
+        this.awaitingResponse = true;
         this.geofenceService.addGeofenceTest(this.lat, this.long, 100);
-        setTimeout(()=>{
-            this.awaitingResponse = false
-        }, 1500)
+        setTimeout(() => {
+            this.awaitingResponse = false;
+        }, 1500);
     }
-
 
     ngOnInit() {
     }
 
-    // add back when alpha.4 is out
-    // navigate(item) {
-    //   this.router.navigate(['/list', JSON.stringify(item)]);
-    // }
 }

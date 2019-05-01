@@ -16,10 +16,17 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
+      title: 'Regions',
+      url: '/region-list'
+    },
+    {
+      title: 'Locations',
+      url: '/location-list'
+    },
+    {
+      title: 'Log in',
+      url: '/login'
+    },
   ];
 
   constructor(
