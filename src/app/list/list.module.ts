@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { ListPage } from './list.page';
 import {MapComponent} from '../map/map.component';
-// import {AppModule} from '../app.module';
+import {GeofenceService} from '../service/geofence/geofence.service';
+import {Geofence} from '@ionic-native/geofence/ngx';
 
 @NgModule({
   imports: [
@@ -19,8 +20,8 @@ import {MapComponent} from '../map/map.component';
         component: ListPage
       }
     ]),
-    // AppModule
   ],
-  declarations: [ListPage, MapComponent]
+  declarations: [ListPage, MapComponent],
+  providers: [GeofenceService, Geofence]
 })
 export class ListPageModule {}

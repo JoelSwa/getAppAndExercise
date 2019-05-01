@@ -9,12 +9,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-// import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // MapComponent
   ],
   entryComponents: [],
   imports: [
@@ -29,7 +27,6 @@ import { AppRoutingModule } from './app-routing.module';
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   exports: [
-    // MapComponent
   ],
   bootstrap: [AppComponent]
 })

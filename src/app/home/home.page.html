@@ -13,14 +13,14 @@
     <ion-card class="welcome-card">
         <ion-img src="/assets/skyline.png"></ion-img>
         <ion-card-header>
-            <ion-card-subtitle>Välkommen!</ion-card-subtitle>
-            <ion-card-title>Logga in nedan</ion-card-title>
+            <ion-card-subtitle>Welcome!</ion-card-subtitle>
+            <ion-card-title>Log in or register</ion-card-title>
         </ion-card-header>
-        <ion-input id="usernameField" placeholder="Användarnamn" clearInput="true" [(ngModel)]="usernameInput"
+        <ion-input id="usernameField" placeholder="Username" clearInput="true" [(ngModel)]="usernameInput"
                    (keydown)="onEnterClick($event)"></ion-input>
-        <ion-input id="passwordField" placeholder="Lösenord" clearInput="true" type="password" clearOnEdit="false"
+        <ion-input id="passwordField" placeholder="Password" clearInput="true" type="password" clearOnEdit="false"
                    [(ngModel)]="passwordInput" (keydown)="onEnterClick($event)"></ion-input>
-        <ion-button id="logInButton" (click)="logIn()">Logga in&nbsp;&nbsp;&nbsp;
+        <ion-button id="logInButton" (click)="logIn()">Log in&nbsp;&nbsp;&nbsp;
             <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
         </ion-button>
     </ion-card>
