@@ -47,13 +47,15 @@ export class GeofenceService {
             }
         }
         this.geofence.addOrUpdate(fence).then(
-            () => console.log('Geofence added'),
+            () => {
+                console.log('Geofence added')
+                this.idTemp++
+            },
             (err) => {
                 console.log('Geofence failed to add')
                 console.log(err)
-                this.idTemp++   //Ta bort när testet är klart
             }
-        );
+        )
     }
 
     public addGeofenceTest(lat, long, radius) {
@@ -80,6 +82,6 @@ export class GeofenceService {
                 console.log('Geofence failed to add')
                 console.log(err)
             }
-        );
+        )
     }
 }

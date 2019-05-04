@@ -96,7 +96,7 @@ export class LoginPage {
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 202) {
                         // alert('Welcome ' + res.body.username + '!');
-                        this.navCtrl.navigateForward('list');
+                        this.navCtrl.navigateForward('home');
                     }
                 }, (error: HttpErrorResponse) => {
                     if (error.status && error.error) {
