@@ -4,6 +4,7 @@ import {GeofenceService} from '../../service/geofence/geofence.service';
 import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-location-new',
@@ -13,6 +14,7 @@ import {throwError, TimeoutError} from 'rxjs';
 export class LocationNewPage implements OnInit {
 
     constructor(
+        private navCtrl: NavController,
         private geofenceService: GeofenceService,
         private http: HttpClient) {
     }
@@ -26,12 +28,10 @@ export class LocationNewPage implements OnInit {
         if (event.key === 'Enter') {
             let latField = <HTMLIonInputElement> document.getElementById('lat');
             let longField = <HTMLIonInputElement> document.getElementById('long');
-            let save = <HTMLIonButtonElement> document.getElementById('save');
 
             if (this.lat) {
                 if (this.long) {
                     this.focusOut();
-                    save.click();
                     return;
                 }
                 longField.setFocus();
@@ -41,7 +41,6 @@ export class LocationNewPage implements OnInit {
             if (this.long) {
                 if (this.lat) {
                     this.focusOut();
-                    save.click();
                     return;
                 }
                 latField.setFocus();
@@ -51,19 +50,20 @@ export class LocationNewPage implements OnInit {
     }
 
     private focusOut() {
+        let save = <HTMLIonButtonElement> document.getElementById('saveGeo');
         let activeElement = <HTMLIonInputElement> document.activeElement;
         activeElement && activeElement.blur && activeElement.blur();
+        save.click();
     }
 
     private saveGeofence() {
-        if(localStorage.getItem("username")){
-            console.log("localStorage Username : " + localStorage.getItem("username"))
+        if (localStorage.getItem('username')) {
             if (!this.awaitingResponse) {
                 let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences', {
                     latitude: this.lat,
                     longitude: this.long,
                     radius: 100,
-                    username: localStorage.getItem("username")
+                    username: localStorage.getItem('username')
                 });
                 setTimeout(() => {
                     this.awaitingResponse = true;
@@ -84,7 +84,7 @@ export class LocationNewPage implements OnInit {
                     })
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 201) {
-                        alert("Geofence added!")
+                        alert('Geofence added!');
                     }
                 }, (error: HttpErrorResponse) => {
                     if (error.status && error.error) {
@@ -92,21 +92,19 @@ export class LocationNewPage implements OnInit {
                     }
                     console.error(error);
                 });
-
-                // ************************************************************************************************
-
             }
+        } else {
+            alert('Was not able to authenticate user');
+            this.navCtrl.navigateRoot('login');
         }
-
     }
 
-    private checkLocalStorage(){
-        if(localStorage.getItem("username")){
-            alert("Logged in as " + localStorage.getItem("username"))
-        } else{
-            alert("Not logged in according to storage")
+    private checkLocalStorage() {
+        if (localStorage.getItem('username')) {
+            alert('Logged in as ' + localStorage.getItem('username'));
+        } else {
+            alert('Not logged in according to storage');
         }
-
     }
 
     ngOnInit() {

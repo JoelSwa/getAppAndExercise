@@ -12,10 +12,10 @@
 <ion-content>
     <ion-card>
         <ion-input id="lat" value="59.316253" clearInput="false" [(ngModel)]="lat"
-                   (keydown)="onEnterClick($event)"></ion-input>
+                   (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
         <ion-input id="long" value="18.235457" clearInput="false"
-                   [(ngModel)]="long" (keydown)="onEnterClick($event)"></ion-input>
-        <ion-button id="save" (click)="saveGeofence()">Save&nbsp;&nbsp;&nbsp;
+                   [(ngModel)]="long" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
+        <ion-button id="saveGeo" (click)="saveGeofence()">Save&nbsp;&nbsp;&nbsp;
             <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
         </ion-button>
         <ion-button id="checkLocalStorage" (click)="checkLocalStorage()">Check local storage</ion-button>
