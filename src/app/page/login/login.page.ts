@@ -23,50 +23,42 @@ export class LoginPage {
     usernameInput: string = '';
     passwordInput: string = '';
 
+
     public onEnterClick(event) {
         if (event.key === 'Enter') {
             if (!this.awaitingResponse) {
                 let usernameField = <HTMLIonInputElement> document.getElementById('usernameField');
                 let passwordField = <HTMLIonInputElement> document.getElementById('passwordField');
-                let logInButton = <HTMLIonButtonElement> document.getElementById('logInButton');
 
-                let passwordLength = this.passwordInput.length;
-                let usernameLength = this.usernameInput.length;
-
-                if (usernameLength > 0) {
-                    if (passwordLength > 0) {
-                        this.focusOut();
-                        logInButton.click();
+                switch (0) {
+                    case this.usernameInput.length:
+                        usernameField.setFocus();
                         return;
-                    }
-                    passwordField.setFocus();
-                    return;
-                }
 
-                if (passwordLength > 0) {
-                    if (usernameLength > 0) {
-                        this.focusOut();
-                        logInButton.click();
+                    case this.passwordInput.length:
+                        passwordField.setFocus();
                         return;
-                    }
-                    usernameField.setFocus();
-                    return;
+
+                    default:
+                        this.focusOutAndClick();
+                        return;
                 }
             }
         }
     }
 
-    private focusOut() {
+    private focusOutAndClick() {
+        let logInButton = <HTMLIonButtonElement> document.getElementById('logInButton');
         let activeElement = <HTMLIonInputElement> document.activeElement;
         activeElement && activeElement.blur && activeElement.blur();
+        logInButton.click();
     }
 
-    public logIn() {
-
-        //shortcut for testing purposes
+    private logIn() {
+        //backdoor for testing purposes
         if (this.usernameInput === 'm' && this.passwordInput === 'm') {
-            this.navCtrl.navigateForward('home')
-
+            localStorage.setItem('username', 'admin');
+            this.navCtrl.navigateRoot('home');
         } else {
 
             // ************************************************************************************************
@@ -95,8 +87,9 @@ export class LoginPage {
                     })
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 202) {
+                        localStorage.setItem('username', res.body.username);
                         // alert('Welcome ' + res.body.username + '!');
-                        this.navCtrl.navigateForward('home');
+                        this.navCtrl.navigateRoot('home');
                     }
                 }, (error: HttpErrorResponse) => {
                     if (error.status && error.error) {
@@ -108,6 +101,12 @@ export class LoginPage {
                 // ************************************************************************************************
 
             }
+        }
+    }
+
+    private register() {
+        if(!this.awaitingResponse){
+            this.navCtrl.navigateBack('register');
         }
     }
 }

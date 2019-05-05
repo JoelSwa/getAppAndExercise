@@ -6,30 +6,32 @@ const routes: Routes = [
     {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
-    },
+        pathMatch: 'full'},
     {
         path: 'home',
-        loadChildren: './page/home/home.module#HomePageModule'
-    },
+        loadChildren: './page/home/home.module#HomePageModule'},
     {
         path: 'login',
-        loadChildren: './page/login/login.module#LoginPageModule'
-    },
+        loadChildren: './page/login/login.module#LoginPageModule'},
     {
         path: 'region-list',
-        loadChildren: './page/region-list/region-list.module#RegionListPageModule'
-    },
+        loadChildren: './page/region-list/region-list.module#RegionListPageModule'},
     {
         path: 'location-list',
-        loadChildren: './page/location-list/location-list.module#LocationListPageModule'
-    },
+        loadChildren: './page/location-list/location-list.module#LocationListPageModule'},
     {
-        path: 'region-new', loadChildren: './page/region-new/region-new.module#RegionNewPageModule'
-    },
+        path: 'region-new',
+        loadChildren: './page/region-new/region-new.module#RegionNewPageModule'},
     {
-        path: 'location-new', loadChildren: './page/location-new/location-new.module#LocationNewPageModule'
-    },
+        path: 'location-new',
+        loadChildren: './page/location-new/location-new.module#LocationNewPageModule'},
+    {
+        path: 'register',
+        loadChildren: './page/register/register.module#RegisterPageModule'},
+    {
+        path: 'logout',
+        loadChildren: './page/logout/logout.module#LogoutPageModule'},
+
 ];
 
 @NgModule({

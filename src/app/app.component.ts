@@ -24,8 +24,8 @@ export class AppComponent {
       url: '/location-list'
     },
     {
-      title: 'Log in',
-      url: '/login'
+      title: 'Log out',
+      url: '/logout'
     },
   ];
 

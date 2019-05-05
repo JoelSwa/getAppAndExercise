@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Log out</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-text>
+        <h1>Do you wish to log out?</h1>
+    </ion-text>
+    <ion-button id="yesButton" (click)="logout()" size="block">Yes</ion-button>
+    <ion-button id="noButton" (click)="return()" size="block">No</ion-button>
+</ion-content>
