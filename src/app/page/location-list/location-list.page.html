@@ -1,20 +1,28 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>
-      Locations
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Locations
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="card-background-page">
 
-  <ion-card (click)="navigateToLocationNew()">
-    <img src="assets/img/newLocation.png"/>
-    <div class="card-title">New location</div>
-    <div class="card-subtitle">Add a new location based on coordinates</div>
-  </ion-card>
+    <ion-card (click)="navigateToLocationNew()">
+        <img src="assets/img/newLocation.png"/>
+        <div class="card-title">New location</div>
+        <div class="card-subtitle">Add a new location based on coordinates</div>
+    </ion-card>
+    <ion-button (click)="getItems()" size="block">Refresh&nbsp;&nbsp;&nbsp;<ion-spinner
+            *ngIf="awaitingResponse"></ion-spinner>
+    </ion-button>
+    <ion-list>
+        <ion-item *ngFor="let item of items">
+            <ion-label>{{item.latitude}}</ion-label>
+        </ion-item>
+    </ion-list>
 
 </ion-content>

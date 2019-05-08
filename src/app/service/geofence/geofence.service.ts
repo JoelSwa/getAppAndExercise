@@ -2,7 +2,9 @@
 import {Injectable} from '@angular/core';
 import {Geofence} from '@ionic-native/geofence/ngx';
 
-
+/**
+ * Variable for accessing custom methods from Geofence-plugin
+ */
 declare var window;
 
 interface NotificationData {
@@ -34,7 +36,7 @@ export class GeofenceService {
 
     private addGeofence() {
         let fence = {
-            id: 'usernameForNow', //any unique ID, perhaps an Id for the placed geofence that combines userId (bad) or user salt (hmm..) + fence-number
+            id: 'usernameForNow', //any unique ID
             latitude: 59.316338, //center of geofence radius
             longitude: 18.233760,
             radius: 50, //radius to edge of geofence in meters
@@ -60,7 +62,7 @@ export class GeofenceService {
 
     public addGeofenceTest(lat, long, radius) {
         let fence = {
-            id: 1, //any unique ID, perhaps an Id for the placed geofence that combines userId (bad) or user salt (hmm..) + fence-number
+            id: 1, //any unique ID
             latitude: lat, //center of geofence radius
             longitude: long,
             radius: radius, //radius to edge of geofence in meters
