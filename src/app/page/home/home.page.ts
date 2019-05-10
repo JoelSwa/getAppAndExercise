@@ -22,4 +22,8 @@ export class HomePage {
     public navigateToRegionList(){
         this.navCtrl.navigateForward('region-list')
     }
+
+    public navigateToWalkList(){
+        this.navCtrl.navigateForward('walk-list')
+    }
 }

@@ -19,8 +19,11 @@ export class LocationNewPage implements OnInit {
         private http: HttpClient) {
     }
 
-    private lat: number;
-    private long: number;
+    private lat: number = 59;
+    private long: number = 19;
+    private name: string = "name";
+    private transition: number = 1
+    private radius: number = 100
     private awaitingResponse: boolean = false;
 
 
@@ -60,10 +63,12 @@ export class LocationNewPage implements OnInit {
         if (localStorage.getItem('username')) {
             if (!this.awaitingResponse) {
                 let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences', {
+                    username: localStorage.getItem('username'),
+                    name: this.name,
                     latitude: this.lat,
                     longitude: this.long,
-                    radius: 100,
-                    username: localStorage.getItem('username')
+                    radius: this.radius,
+                    transition: this.transition
                 });
                 setTimeout(() => {
                     this.awaitingResponse = true;
@@ -105,6 +110,18 @@ export class LocationNewPage implements OnInit {
         } else {
             alert('Not logged in according to storage');
         }
+    }
+
+    private checkValues(){
+        console.log("lat: " + this.lat)
+        console.log("long: " + this.long)
+        console.log("name: " + this.name)
+        console.log("transition: " + this.transition)
+        console.log("radius: " + this.radius)
+    }
+
+    private navigateToLocationList(){
+        this.navCtrl.navigateBack("location-list")
     }
 
     ngOnInit() {

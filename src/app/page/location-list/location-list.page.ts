@@ -21,19 +21,16 @@ export class LocationListPage implements OnInit {
 
     awaitingResponse: boolean = false;
 
-    items: GeofenceInstance[];
+    geofencesFromDatabase: GeofenceInstance[];
 
     navigateToLocationNew() {
         this.navCtrl.navigateForward('location-new');
     }
 
     getItems(){
-        console.log("getItems()")
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
-                // username: localStorage.getItem('username')
-                username: "hej",
-                test: "test"
+                username: localStorage.getItem('username')
             });
             setTimeout(() => {
                 this.awaitingResponse = true;
@@ -55,7 +52,7 @@ export class LocationListPage implements OnInit {
             ).subscribe((res: HttpResponse<any>) => {
                 if (res.status === 200) {
                     console.log("status === 200")
-                    this.items = res.body
+                    this.geofencesFromDatabase = res.body
                     console.log("Geofences fetched from server")
                 }
                 console.log("status !== 200")
@@ -66,6 +63,12 @@ export class LocationListPage implements OnInit {
                 console.error(error);
             });
         }
+    }
+
+    private reorderItems(event){
+        const itemMove = this.geofencesFromDatabase.splice(event.detail.from, 1)[0];
+        this.geofencesFromDatabase.splice(event.detail.to, 0, itemMove);
+        event.detail.complete();
     }
 
     ngOnInit() {

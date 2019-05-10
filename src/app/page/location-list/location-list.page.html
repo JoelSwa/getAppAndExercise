@@ -11,18 +11,24 @@
 
 <ion-content class="card-background-page">
 
-    <ion-card (click)="navigateToLocationNew()">
-        <img src="assets/img/newLocation.png"/>
-        <div class="card-title">New location</div>
-        <div class="card-subtitle">Add a new location based on coordinates</div>
-    </ion-card>
-    <ion-button (click)="getItems()" size="block">Refresh&nbsp;&nbsp;&nbsp;<ion-spinner
+    <ion-item (click)="navigateToLocationNew()">
+        <ion-label class="labelTest">
+            Add new location
+        </ion-label>
+    </ion-item>
+
+    <ion-button (click)="getItems()" size="block" color="success">Refresh&nbsp;&nbsp;&nbsp;<ion-spinner
             *ngIf="awaitingResponse"></ion-spinner>
     </ion-button>
+
     <ion-list>
-        <ion-item *ngFor="let item of items">
-            <ion-label>{{item.latitude}}</ion-label>
-        </ion-item>
+        <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled="false">
+            <ion-reorder *ngFor="let fence of geofencesFromDatabase">
+                <ion-item>
+                    <ion-label>{{fence.name}}</ion-label>
+                </ion-item>
+            </ion-reorder>
+        </ion-reorder-group>
     </ion-list>
 
 </ion-content>

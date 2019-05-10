@@ -5,16 +5,22 @@
 </ion-header>
 
 <ion-content>
+
     <ion-input id="usernameRegField" [(ngModel)]="usernameInput" (keydown)="onEnterClick($event)" placeholder="Username"
                clearInput="true" readonly={{awaitingResponse}}></ion-input>
+
     <ion-input id="passwordRegField" [(ngModel)]="passwordFirstInput" (keydown)="onEnterClick($event)"
                placeholder="Password" clearInput="true" type="password" clearOnEdit="false" size="block"
                readonly={{awaitingResponse}}></ion-input>
+
     <ion-input id="passwordRegFieldRepeat" [(ngModel)]="passwordSecondInput" (keydown)="onEnterClick($event)"
                placeholder="Repeat password" clearInput="true" type="password" clearOnEdit="false" size="block"
                readonly={{awaitingResponse}}></ion-input>
-    <ion-button id="registerButton" (click)="register()" size="block">Register&nbsp;&nbsp;&nbsp;
+
+    <ion-button id="registerButton" (click)="register()" size="block" color="success">Register&nbsp;&nbsp;&nbsp;
         <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
     </ion-button>
-    <ion-button (click)="goToLogin()" size="block">Cancel</ion-button>
+
+    <ion-button (click)="goToLogin()" size="block" color="danger">Cancel</ion-button>
+
 </ion-content>

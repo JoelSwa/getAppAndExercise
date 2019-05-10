@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Create new walk</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-label class="labelTest">Click a location to add it to the walk</ion-label>
+
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+
+    <ion-list>
+        <ion-item *ngFor="let fence of geofencesFromDatabase; let i = index" (click)="addLocationToWalk(fence, i)">
+            <ion-label>{{fence.name}}</ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ion-label class="labelTest" *ngIf="orderChangeDisabled">New walk</ion-label>
+    <ion-label class="labelTest" *ngIf="!orderChangeDisabled">New walk (reorder) </ion-label>
+
+    <ion-list *ngIf="orderChangeDisabled">
+        <ion-item class="testReorder" *ngFor="let fence of newWalk; let i = index" (click)="removeLocationFromWalk(fence, i)">
+            <ion-label>{{fence.name}}</ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ion-list *ngIf="!orderChangeDisabled">
+        <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled={{orderChangeDisabled}}>
+            <ion-reorder *ngFor="let fence of newWalk; let i = index">
+                <ion-item>
+                    <ion-label>{{fence.name}}</ion-label>
+                </ion-item>
+            </ion-reorder>
+        </ion-reorder-group>
+    </ion-list>
+
+    <ion-button color="success" (click)="saveWalk()">Add walk</ion-button>
+
+    <!--    <ion-button (click)="orderChangeDisabled = orderChangeDisabled ? false : true">Change order</ion-button>-->
+    <ion-button (click)="changeOrder()">Change order</ion-button>
+
+    <ion-button id="walkNewCancel" (click)="navigateToWalkList()" color="danger">Cancel</ion-button>
+
+</ion-content>
