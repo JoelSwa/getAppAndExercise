@@ -27,7 +27,13 @@ export class LocationListPage implements OnInit {
         this.navCtrl.navigateForward('location-new');
     }
 
-    getItems(){
+    private reorderItems(event){
+        const itemMove = this.geofencesFromDatabase.splice(event.detail.from, 1)[0];
+        this.geofencesFromDatabase.splice(event.detail.to, 0, itemMove);
+        event.detail.complete();
+    }
+
+    ngOnInit() {
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
                 username: localStorage.getItem('username')
@@ -63,14 +69,5 @@ export class LocationListPage implements OnInit {
                 console.error(error);
             });
         }
-    }
-
-    private reorderItems(event){
-        const itemMove = this.geofencesFromDatabase.splice(event.detail.from, 1)[0];
-        this.geofencesFromDatabase.splice(event.detail.to, 0, itemMove);
-        event.detail.complete();
-    }
-
-    ngOnInit() {
     }
 }

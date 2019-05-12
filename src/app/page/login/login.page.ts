@@ -88,7 +88,6 @@ export class LoginPage {
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 202) {
                         localStorage.setItem('username', res.body.username);
-                        // alert('Welcome ' + res.body.username + '!');
                         this.navCtrl.navigateRoot('home');
                     }
                 }, (error: HttpErrorResponse) => {

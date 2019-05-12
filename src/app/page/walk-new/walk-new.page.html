@@ -21,16 +21,17 @@
 
     <ion-label class="labelTest" *ngIf="orderChangeDisabled">New walk</ion-label>
     <ion-label class="labelTest" *ngIf="!orderChangeDisabled">New walk (reorder) </ion-label>
+    <ion-input placeholder="name of walk" [(ngModel)]="walkNameInput"></ion-input>
 
     <ion-list *ngIf="orderChangeDisabled">
-        <ion-item class="testReorder" *ngFor="let fence of newWalk; let i = index" (click)="removeLocationFromWalk(fence, i)">
+        <ion-item class="testReorder" *ngFor="let fence of geofenceCollection; let i = index" (click)="removeLocationFromWalk(fence, i)">
             <ion-label>{{fence.name}}</ion-label>
         </ion-item>
     </ion-list>
 
     <ion-list *ngIf="!orderChangeDisabled">
         <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled={{orderChangeDisabled}}>
-            <ion-reorder *ngFor="let fence of newWalk; let i = index">
+            <ion-reorder *ngFor="let fence of geofenceCollection; let i = index">
                 <ion-item>
                     <ion-label>{{fence.name}}</ion-label>
                 </ion-item>
@@ -44,5 +45,8 @@
     <ion-button (click)="changeOrder()">Change order</ion-button>
 
     <ion-button id="walkNewCancel" (click)="navigateToWalkList()" color="danger">Cancel</ion-button>
+
+    <ion-button color="success" (click)="testNewWalkList()">Log geofence info</ion-button>
+
 
 </ion-content>

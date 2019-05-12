@@ -13,4 +13,12 @@
             Create new walk
         </ion-label>
     </ion-item>
+
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+
+    <ion-list>
+        <ion-item *ngFor="let walk of walksFromDatabase" (click)="goToWalk(walk)">
+            <ion-label>{{walk.name}}</ion-label>
+        </ion-item>
+    </ion-list>
 </ion-content>

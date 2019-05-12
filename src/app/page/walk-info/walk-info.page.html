@@ -3,26 +3,19 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>
-            Locations
-        </ion-title>
+        <ion-title>walk-info</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="card-background-page">
-
-    <ion-item (click)="navigateToLocationNew()">
-        <ion-label class="labelTest">
-            Add new location
-        </ion-label>
-    </ion-item>
-
+<ion-content>
     <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
-
+    <ion-label class="labelTest">{{walk.name}}</ion-label>
     <ion-list>
-        <ion-item *ngFor="let fence of geofencesFromDatabase">
+        <ion-item *ngFor="let fence of walk.geofences">
             <ion-label>{{fence.name}}</ion-label>
         </ion-item>
     </ion-list>
+    <ion-button (click)="startWalk()">Start walk</ion-button>
+    <ion-button (click)="navigateToWalkList()">Back</ion-button>
 
 </ion-content>
