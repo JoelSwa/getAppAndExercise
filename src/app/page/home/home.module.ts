@@ -5,8 +5,6 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
-import {GeofenceService} from '../../service/geofence/geofence.service';
-import {Geofence} from '@ionic-native/geofence/ngx';
 
 @NgModule({
   imports: [
@@ -20,7 +18,6 @@ import {Geofence} from '@ionic-native/geofence/ngx';
       }
     ])
   ],
-  declarations: [HomePage],
-  providers: [GeofenceService, Geofence]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

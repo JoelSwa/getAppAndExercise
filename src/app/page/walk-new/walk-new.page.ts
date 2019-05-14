@@ -4,7 +4,7 @@ import {GeofenceInstance} from '../../model/geofence-instance';
 import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
-import {AlertController, NavController} from '@ionic/angular';
+import {NavController} from '@ionic/angular';
 
 @Component({
     selector: 'app-walk-new',
@@ -14,15 +14,14 @@ import {AlertController, NavController} from '@ionic/angular';
 export class WalkNewPage implements OnInit {
 
     constructor(private navCtrl: NavController,
-                private http: HttpClient,
-                private alertCtrl: AlertController) {
+                private http: HttpClient) {
     }
 
     geofencesFromDatabase: GeofenceInstance[] = [];
     geofenceCollection: GeofenceInstance[] = [];
     private orderChangeDisabled: boolean = true;
     private awaitingResponse: boolean = false;
-    private walkNameInput: string = "";
+    private walkNameInput: string = "New walk";
 
     ngOnInit() {
         if (localStorage.getItem('username') !== 'admin') {
@@ -62,47 +61,17 @@ export class WalkNewPage implements OnInit {
                 });
             }
         } else {
-            this.geofencesFromDatabase.push({
-                    id: 1,
-                    name: 'Admin test 1',
+            //ONLY FOR OFFLINE TESTING PURPOSES
+            for(let i = 0; i < 5; i++){
+                this.geofencesFromDatabase.push({
+                    id: i,
+                    name: 'Test location ' + i,
                     latitude: 1515,
                     longitude: 15215,
                     radius: 142,
                     transition: 3
-                },
-                {
-                    id: 2,
-                    name: 'Admin test 2',
-                    latitude: 1515,
-                    longitude: 15215,
-                    radius: 142,
-                    transition: 3
-                },
-                {
-                    id: 3,
-                    name: 'Admin test 3',
-                    latitude: 1515,
-                    longitude: 15215,
-                    radius: 142,
-                    transition: 3
-                },
-                {
-                    id: 4,
-                    name: 'Admin test 4',
-                    latitude: 1515,
-                    longitude: 15215,
-                    radius: 142,
-                    transition: 3
-                },
-                {
-                    id: 5,
-                    name: 'Admin test 5',
-                    latitude: 1515,
-                    longitude: 15215,
-                    radius: 142,
-                    transition: 3
-                }
-            );
+                })
+            }
         }
     }
 
@@ -137,6 +106,7 @@ export class WalkNewPage implements OnInit {
             ).subscribe((res: HttpResponse<any>) => {
                 if (res.status === 201) {
                     alert("Walk added")
+                    this.navCtrl.navigateBack('walk-list');
                     console.log('status === 201');
                 }
                 console.log('status !== 200');
@@ -164,16 +134,6 @@ export class WalkNewPage implements OnInit {
     private async removeLocationFromWalk(fence, index) {
         this.geofencesFromDatabase.push(fence);
         this.geofenceCollection.splice(index, 1);
-        // let alertButtons: AlertButton[] = [
-        //     {
-        //         text: 'Remove', handler: () => {
-        //             this.geofencesFromDatabase.push(fence);
-        //             this.newWalk.splice(index, 1);
-        //         }
-        //     },
-        //     {text: 'Cancel'}];
-        // let alertTest = await this.alertCtrl.create({header: 'Remove', message: 'Do you want to remove ' + fence.name + "?", buttons: alertButtons});
-        // await alertTest.present();
     }
 
     private testNewWalkList() {

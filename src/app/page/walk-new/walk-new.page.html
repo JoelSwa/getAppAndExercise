@@ -9,22 +9,13 @@
 
 <ion-content>
 
-    <ion-label class="labelTest">Click a location to add it to the walk</ion-label>
-
-    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
-
-    <ion-list>
-        <ion-item *ngFor="let fence of geofencesFromDatabase; let i = index" (click)="addLocationToWalk(fence, i)">
-            <ion-label>{{fence.name}}</ion-label>
-        </ion-item>
-    </ion-list>
-
     <ion-label class="labelTest" *ngIf="orderChangeDisabled">New walk</ion-label>
-    <ion-label class="labelTest" *ngIf="!orderChangeDisabled">New walk (reorder) </ion-label>
-    <ion-input placeholder="name of walk" [(ngModel)]="walkNameInput"></ion-input>
+    <ion-label class="labelTest" *ngIf="!orderChangeDisabled">New walk (reorder)</ion-label>
+    <ion-input [(ngModel)]="walkNameInput"></ion-input>
 
     <ion-list *ngIf="orderChangeDisabled">
-        <ion-item class="testReorder" *ngFor="let fence of geofenceCollection; let i = index" (click)="removeLocationFromWalk(fence, i)">
+        <ion-item class="testReorder" *ngFor="let fence of geofenceCollection; let i = index"
+                  (click)="removeLocationFromWalk(fence, i)">
             <ion-label>{{fence.name}}</ion-label>
         </ion-item>
     </ion-list>
@@ -41,12 +32,20 @@
 
     <ion-button color="success" (click)="saveWalk()">Add walk</ion-button>
 
-    <!--    <ion-button (click)="orderChangeDisabled = orderChangeDisabled ? false : true">Change order</ion-button>-->
     <ion-button (click)="changeOrder()">Change order</ion-button>
 
     <ion-button id="walkNewCancel" (click)="navigateToWalkList()" color="danger">Cancel</ion-button>
 
     <ion-button color="success" (click)="testNewWalkList()">Log geofence info</ion-button>
 
+    <ion-label class="labelTest">Click a location to add it to the walk</ion-label>
+
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+
+    <ion-list>
+        <ion-item *ngFor="let fence of geofencesFromDatabase; let i = index" (click)="addLocationToWalk(fence, i)">
+            <ion-label>{{fence.name}}</ion-label>
+        </ion-item>
+    </ion-list>
 
 </ion-content>

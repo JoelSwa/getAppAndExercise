@@ -71,12 +71,10 @@ export class WalkInfoPage implements OnInit {
 
     private startFixedTurnWalk() {
         this.geofenceService.startFixedTurnWalk(this.walk)
-        alert('Walk started!');
     }
 
     private startShuffledWalk() {
         this.geofenceService.startShuffledWalk(this.walk)
-        alert('Shuffled walk started!');
     }
 
     private navigateToWalkList() {

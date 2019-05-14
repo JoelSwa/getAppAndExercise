@@ -104,14 +104,6 @@ export class LocationNewPage implements OnInit {
         }
     }
 
-    private checkLocalStorage() {
-        if (localStorage.getItem('username')) {
-            alert('Logged in as ' + localStorage.getItem('username'));
-        } else {
-            alert('Not logged in according to storage');
-        }
-    }
-
     private checkValues(){
         console.log("lat: " + this.lat)
         console.log("long: " + this.long)

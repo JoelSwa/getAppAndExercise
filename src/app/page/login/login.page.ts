@@ -4,6 +4,7 @@ import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular
 import {NavController} from '@ionic/angular';
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
+import {GeofenceService} from '../../service/geofence/geofence.service';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginPage {
 
     constructor(
         private http: HttpClient,
-        private navCtrl: NavController
+        private navCtrl: NavController,
+        private geofenceService: GeofenceService
     ) {
     }
 
@@ -55,7 +57,7 @@ export class LoginPage {
     }
 
     private logIn() {
-        //backdoor for testing purposes
+        //ONLY FOR OFFLINE TESTING PURPOSES
         if (this.usernameInput === 'm' && this.passwordInput === 'm') {
             localStorage.setItem('username', 'admin');
             this.navCtrl.navigateRoot('home');
@@ -88,7 +90,15 @@ export class LoginPage {
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 202) {
                         localStorage.setItem('username', res.body.username);
-                        this.navCtrl.navigateRoot('home');
+                        this.geofenceService.init().then(() => {
+                                console.log('init: accepted');
+                                this.navCtrl.navigateRoot('home');
+                            }, () => {
+                                console.log('init: rejected');
+                                alert("This app relies heavily on GPS. Walks will not function properly with this option disabled.")
+                                this.navCtrl.navigateRoot('home');
+                            }
+                        );
                     }
                 }, (error: HttpErrorResponse) => {
                     if (error.status && error.error) {
@@ -104,7 +114,7 @@ export class LoginPage {
     }
 
     private register() {
-        if(!this.awaitingResponse){
+        if (!this.awaitingResponse) {
             this.navCtrl.navigateBack('register');
         }
     }

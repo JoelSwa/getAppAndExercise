@@ -4,16 +4,6 @@ import {Geofence} from '@ionic-native/geofence/ngx';
 import {WalkInstance} from '../../model/walk-instance';
 import {GeofenceInstance} from '../../model/geofence-instance';
 
-/**
- * Variable for accessing custom methods from Geofence-plugin
- */
-declare var window;
-
-interface NotificationData {
-    walkId: number
-    locationIndex: number
-}
-
 @Injectable({
     providedIn: 'root'
 })
@@ -22,19 +12,7 @@ export class GeofenceService {
     constructor(private geofence: Geofence) {
     }
 
-    idTemp: number;
     private initialized: boolean = false;
-
-    // public init() {
-    //     this.geofence.initialize().then(
-    //         // resolved promise does not return a value
-    //         () => {
-    //             this.initialized = true
-    //             console.log('Geofence Plugin Ready');
-    //         },
-    //         (err) => console.log(err)
-    //     );
-    // }
 
     public init = (): Promise<any> => {
         if (!this.initialized) {
@@ -53,32 +31,6 @@ export class GeofenceService {
             return Promise.resolve();
         }
     };
-
-    private addGeofence() {
-        let fence = {
-            id: 'TestWalk', //any unique ID
-            latitude: 59.316338, //center of geofence radius
-            longitude: 18.233760,
-            radius: 50, //radius to edge of geofence in meters
-            transitionType: 1, //see 'Transition Types' below
-            notification: { //notification settings
-                id: this.idTemp, //any unique ID
-                title: 'You crossed a fence', //notification title
-                text: 'You have just arrived at gosekatt', //notification body
-                openAppOnClick: true //open app when notification is tapped
-            }
-        };
-        this.geofence.addOrUpdate(fence).then(
-            () => {
-                console.log('Geofence added');
-                this.idTemp++;
-            },
-            (err) => {
-                console.log('Geofence failed to add');
-                console.log(err);
-            }
-        );
-    }
 
     public addGeofenceTest(name, lat, long, radius, transition: number) {
         if (transition < 0 || transition > 3) {
@@ -101,7 +53,7 @@ export class GeofenceService {
             () => {
                 alert('Geofence added');
                 console.log('Geofence added');
-                this.idTemp++;
+                // this.idTemp++;
             },
             (err) => {
                 console.log('Geofence failed to add');
@@ -117,41 +69,12 @@ export class GeofenceService {
         }
     }
 
-    /*
-    Man kan ha "type" som parameter, som kollar vilken typ av walk det är man vill starta.
-
-
-    confirmedNext : string = 'Next up: ' + savedFences[i + 1].name
-    nonConfirmedNext : string = 'Good job!'
-
-
-    if(turnBased){
-        for(length - 1)
-            confirmedNext
-        lastIndex
-            nonConfirmedNext
-    }
-
-    if(shuffled){
-        savedFences.scramble()
-        for(length - 1)
-            confirmedNext
-        lastIndex
-            nonConfirmedNext
-    }
-
-    if(ownPick){
-        for(length)
-            nonConfirmedNext
-    }
-     */
-
     public startFixedTurnWalk(walk: WalkInstance) {
         if (this.initialized) {
             let savedFences: GeofenceInstance[] = walk.geofences;
             console.log('geofences.length : ' + savedFences.length);
             let fences = [];
-            if(savedFences){
+            if(savedFences.length > 0){
                 if(savedFences.length > 1){
                     for (let i = 0; i < (savedFences.length - 1); i++) {
                         if (savedFences[i]) {
@@ -198,6 +121,9 @@ export class GeofenceService {
                         console.log(err);
                     }
                 );
+                alert('Walk started!');
+            } else {
+                alert("No locations found for walk")
             }
         } else {
             this.init().then(() => {
@@ -262,7 +188,7 @@ export class GeofenceService {
             }
         } else {
             this.init().then(() => {
-                this.startFixedTurnWalk(walk);
+                this.startShuffledWalk(walk);
             });
         }
     }
