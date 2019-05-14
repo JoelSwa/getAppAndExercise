@@ -19,9 +19,9 @@ export class LocationNewPage implements OnInit {
         private http: HttpClient) {
     }
 
-    private lat: number = 59;
-    private long: number = 19;
-    private name: string = "name";
+    private lat: number = 59.316294;
+    private long: number = 18.235449;
+    private name: string = "Home";
     private transition: number = 1
     private radius: number = 100
     private awaitingResponse: boolean = false;

@@ -14,13 +14,13 @@
         <ion-input class="inputTest" id="geoName" placeholder="Name for geofence" clearInput="true" readonly={{awaitingResponse}}
                    (keydown)="onEnterClick($event)" [(ngModel)]="name"></ion-input>
 
-        <ion-input class="inputTest" id="lat" value="59.316253" clearInput="false" [(ngModel)]="lat"
+        <ion-input class="inputTest" id="lat" clearInput="false" [(ngModel)]="lat"
                    (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
 
-        <ion-input class="inputTest" id="long" value="18.235457" clearInput="false"
+        <ion-input class="inputTest" id="long" clearInput="false"
                    [(ngModel)]="long" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
 
-        <ion-select [(ngModel)]="radius" value="120" okText="Done" selectedText="Radius of geofence">
+        <ion-select [(ngModel)]="radius" value="100" okText="Done" selectedText="Radius of geofence">
             <ion-select-option value="50">50</ion-select-option>
             <ion-select-option value="100">100</ion-select-option>
             <ion-select-option value="150">150</ion-select-option>

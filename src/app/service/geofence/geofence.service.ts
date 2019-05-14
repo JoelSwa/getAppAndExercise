@@ -110,6 +110,13 @@ export class GeofenceService {
         );
     }
 
+    private shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+            [array[i], array[j]] = [array[j], array[i]]; // swap elements
+        }
+    }
+
     /*
     Man kan ha "type" som parameter, som kollar vilken typ av walk det är man vill starta.
 
@@ -125,7 +132,7 @@ export class GeofenceService {
             nonConfirmedNext
     }
 
-    if(scrambled){
+    if(shuffled){
         savedFences.scramble()
         for(length - 1)
             confirmedNext
@@ -199,7 +206,64 @@ export class GeofenceService {
         }
     }
 
-    public startScrambledWalk(walk: WalkInstance){
+    public startShuffledWalk(walk: WalkInstance){
+        if (this.initialized) {
+            let savedFences: GeofenceInstance[] = walk.geofences;
+            console.log('geofences.length : ' + savedFences.length);
+            let fences = [];
+            this.shuffle(savedFences)
+            if(savedFences){
+                if(savedFences.length > 1){
+                    for (let i = 0; i < (savedFences.length - 1); i++) {
+                        if (savedFences[i]) {
+                            console.log('Geofence[' + i + '].name : ' + savedFences[i].name);
+                            fences.push({
+                                id: savedFences[i].name,
+                                latitude: savedFences[i].latitude,
+                                longitude: savedFences[i].longitude,
+                                radius: savedFences[i].radius,
+                                transitionType: savedFences[i].transition,
+                                notification: {
+                                    id: i,
+                                    title: 'You\'ve arrived at ' + savedFences[i].name,
+                                    text: 'Next up: ' + savedFences[i + 1].name,
+                                    openAppOnClick: true
+                                }
+                            });
+                        }
+                    }
+                }
+                let lastIndex: number = (savedFences.length - 1);
+                console.log('geofences[' + lastIndex + '].name : ' + savedFences[lastIndex].name);
+                fences.push({
+                    id: savedFences[lastIndex].name,
+                    latitude: savedFences[lastIndex].latitude,
+                    longitude: savedFences[lastIndex].longitude,
+                    radius: savedFences[lastIndex].radius,
+                    transitionType: savedFences[lastIndex].transition,
+                    notification: {
+                        id: lastIndex,
+                        title: 'You\'ve arrived at ' + savedFences[lastIndex].name,
+                        text: 'Good job!',
+                        openAppOnClick: true
+                    }
+                });
+                console.log('Geofences', fences);
+                this.geofence.addOrUpdate(fences).then(
+                    () => {
+                        console.log('Geofences added');
 
+                    },
+                    (err) => {
+                        console.log('Geofences failed to add');
+                        console.log(err);
+                    }
+                );
+            }
+        } else {
+            this.init().then(() => {
+                this.startFixedTurnWalk(walk);
+            });
+        }
     }
 }
