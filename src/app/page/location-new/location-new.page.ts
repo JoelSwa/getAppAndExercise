@@ -21,9 +21,9 @@ export class LocationNewPage implements OnInit {
 
     private lat: number = 59.316294;
     private long: number = 18.235449;
-    private name: string = "Home";
-    private transition: number = 1
-    private radius: number = 100
+    private name: string = 'Home';
+    private transition: number = 1;
+    private radius: number = 100;
     private awaitingResponse: boolean = false;
 
 
@@ -104,19 +104,10 @@ export class LocationNewPage implements OnInit {
         }
     }
 
-    private checkValues(){
-        console.log("lat: " + this.lat)
-        console.log("long: " + this.long)
-        console.log("name: " + this.name)
-        console.log("transition: " + this.transition)
-        console.log("radius: " + this.radius)
-    }
-
-    private navigateToLocationList(){
-        this.navCtrl.navigateBack("location-list")
+    private navigateToLocationList() {
+        this.navCtrl.navigateBack('location-list');
     }
 
     ngOnInit() {
     }
-
 }
