@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {Component, Injectable} from '@angular/core';
 import {NavController} from '@ionic/angular';
+import {GeofenceService} from '../../service/geofence/geofence.service';
 
 
 @Component({
@@ -12,18 +13,21 @@ import {NavController} from '@ionic/angular';
 export class HomePage {
 
     constructor(
-        private navCtrl: NavController
-    ) {}
-
-    public navigateToLocationList(){
-        this.navCtrl.navigateForward('location-list')
+        private navCtrl: NavController,
+        private geofenceService: GeofenceService
+    ) {
+        this.geofenceService.init();
     }
 
-    public navigateToRegionList(){
-        this.navCtrl.navigateForward('region-list')
+    public navigateToLocationList() {
+        this.navCtrl.navigateForward('location-list');
     }
 
-    public navigateToWalkList(){
-        this.navCtrl.navigateForward('walk-list')
+    public navigateToRegionList() {
+        this.navCtrl.navigateForward('region-list');
+    }
+
+    public navigateToWalkList() {
+        this.navCtrl.navigateForward('walk-list');
     }
 }

@@ -6,6 +6,7 @@ import {NavController} from '@ionic/angular';
 import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
+import {GeofenceService} from '../../service/geofence/geofence.service';
 
 @Component({
     selector: 'app-walk-info',
@@ -16,7 +17,8 @@ export class WalkInfoPage implements OnInit {
 
     constructor(private walkService: WalkService,
                 private navCtrl: NavController,
-                private http: HttpClient) {
+                private http: HttpClient,
+                private geofenceService: GeofenceService) {
     }
 
     private walk: WalkInstance;
@@ -68,7 +70,8 @@ export class WalkInfoPage implements OnInit {
     }
 
     private startWalk() {
-        alert('upcoming feature');
+        this.geofenceService.startFixedTurnWalk(this.walk)
+        alert('Walk started!');
     }
 
     private navigateToWalkList() {
