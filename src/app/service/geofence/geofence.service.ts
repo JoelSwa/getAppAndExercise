@@ -74,8 +74,8 @@ export class GeofenceService {
             let savedFences: GeofenceInstance[] = walk.geofences;
             console.log('geofences.length : ' + savedFences.length);
             let fences = [];
-            if(savedFences.length > 0){
-                if(savedFences.length > 1){
+            if (savedFences.length > 0) {
+                if (savedFences.length > 1) {
                     for (let i = 0; i < (savedFences.length - 1); i++) {
                         if (savedFences[i]) {
                             console.log('Geofence[' + i + '].name : ' + savedFences[i].name);
@@ -88,7 +88,7 @@ export class GeofenceService {
                                 notification: {
                                     id: i,
                                     title: 'You\'ve arrived at ' + savedFences[i].name,
-                                    text: 'Next up: ' + savedFences[i + 1].name,
+                                    text: 'Next one: ' + savedFences[i + 1].name,
                                     openAppOnClick: true
                                 }
                             });
@@ -114,16 +114,15 @@ export class GeofenceService {
                 this.geofence.addOrUpdate(fences).then(
                     () => {
                         console.log('Geofences added');
-
+                        alert('Walk started!\n\nFirst stop is ' + savedFences[0].name);
                     },
                     (err) => {
                         console.log('Geofences failed to add');
                         console.log(err);
                     }
                 );
-                alert('Walk started!');
             } else {
-                alert("No locations found for walk")
+                alert('No locations found for walk');
             }
         } else {
             this.init().then(() => {
@@ -132,14 +131,14 @@ export class GeofenceService {
         }
     }
 
-    public startShuffledWalk(walk: WalkInstance){
+    public startShuffledWalk(walk: WalkInstance) {
         if (this.initialized) {
             let savedFences: GeofenceInstance[] = walk.geofences;
             console.log('geofences.length : ' + savedFences.length);
             let fences = [];
-            this.shuffle(savedFences)
-            if(savedFences){
-                if(savedFences.length > 1){
+            this.shuffle(savedFences);
+            if (savedFences.length > 0) {
+                if (savedFences.length > 1) {
                     for (let i = 0; i < (savedFences.length - 1); i++) {
                         if (savedFences[i]) {
                             console.log('Geofence[' + i + '].name : ' + savedFences[i].name);
@@ -152,7 +151,7 @@ export class GeofenceService {
                                 notification: {
                                     id: i,
                                     title: 'You\'ve arrived at ' + savedFences[i].name,
-                                    text: 'Next up: ' + savedFences[i + 1].name,
+                                    text: 'Next one: ' + savedFences[i + 1].name,
                                     openAppOnClick: true
                                 }
                             });
@@ -177,6 +176,7 @@ export class GeofenceService {
                 console.log('Geofences', fences);
                 this.geofence.addOrUpdate(fences).then(
                     () => {
+                        alert('Shuffled walk started!\n\nGo to: ' + savedFences[0].name);
                         console.log('Geofences added');
 
                     },
@@ -185,6 +185,8 @@ export class GeofenceService {
                         console.log(err);
                     }
                 );
+            } else {
+                alert('No locations found for walk');
             }
         } else {
             this.init().then(() => {
