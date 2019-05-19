@@ -37,6 +37,12 @@
 
 }
 
+.label-medium{
+  font-size: 1.2em !important;
+  padding: 15px;
+  display: flex;
+}
+
 .label-medium-center{
   font-size: 1.2em !important;
   padding: 25px;
@@ -47,10 +53,14 @@
   width: 100%;
 }
 
-.label-medium{
-  font-size: 1.2em !important;
-  padding: 15px;
+.label-large-center{
+  font-size: 1.5em !important;
+  padding: 25px;
+  margin-top: 25px;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .input-medium{
