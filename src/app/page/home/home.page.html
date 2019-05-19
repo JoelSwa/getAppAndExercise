@@ -11,16 +11,16 @@
 
 <ion-content class="card-background-page">
 
+    <ion-card (click)="navigateToLocationList()">
+        <img src="assets/img/location.jpg"/>
+        <div class="card-title">Locations</div>
+        <!--        <div class="card-subtitle">View and add specific locations</div>-->
+    </ion-card>
+
     <ion-card (click)="navigateToWalkList()">
         <img src="assets/img/walk.jpg"/>
         <div class="card-title">Walks</div>
 <!--        <div class="card-subtitle">View and add specific walks</div>-->
-    </ion-card>
-
-    <ion-card (click)="navigateToLocationList()">
-        <img src="assets/img/location.jpg"/>
-        <div class="card-title">Locations</div>
-<!--        <div class="card-subtitle">View and add specific locations</div>-->
     </ion-card>
 
     <ion-card (click)="navigateToRegionList()">
