@@ -10,15 +10,16 @@
 <ion-content>
     <ion-label class="label-medium">A walk is a combination of locations.
     </ion-label>
-    <ion-label class="label-medium">Click on an available location to add it to the walk, and click on it again to
-        remove it. You can drag the added locations to place them in your preferred order (starts at the top).
+    <ion-label class="label-medium">Click on an available location to add it to the walk, and click on it again if you
+        want to remove it. You can drag the selected locations to place them in your preferred order (starts from the
+        top).
     </ion-label>
 
     <ion-card>
         <ion-input id="name-of-walk-input" class="input-medium" [(ngModel)]="walkNameInput"
                    placeholder="Name of walk"></ion-input>
 
-        <ion-label id="no-locations-added" *ngIf="!geofencesAdded">(no locations added)</ion-label>
+        <ion-label id="no-locations-added" *ngIf="!geofencesAdded">(no locations selected)</ion-label>
 
         <ion-list>
             <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled="false">
