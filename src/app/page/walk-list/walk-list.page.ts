@@ -27,6 +27,10 @@ export class WalkListPage implements OnInit {
     }
 
     ngOnInit() {
+        this.getWalks()
+    }
+
+    private getWalks(){
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/walks/all', {
                 username: localStorage.getItem('username')
@@ -67,5 +71,10 @@ export class WalkListPage implements OnInit {
     private goToWalk(walk: WalkInstance) {
         this.walkService.setActiveWalk(walk)
         this.navCtrl.navigateForward("walk-info")
+    }
+
+    private async doRefresh(event){
+        this.getWalks()
+        event.target.complete();
     }
 }

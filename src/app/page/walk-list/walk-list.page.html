@@ -18,6 +18,15 @@
         <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
     </ion-card>
 
+    <ion-refresher pulling-text="Pull to refresh" (ionRefresh)="doRefresh($event)" pullMax="120">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="Pull to refresh"
+                refreshingSpinner="circles"
+                refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+
     <ion-list>
         <ion-item *ngFor="let walk of walksFromDatabase" (click)="goToWalk(walk)">
             <ion-label>{{walk.name}}</ion-label>
