@@ -19,9 +19,9 @@ export class WalkNewPage implements OnInit {
 
     geofencesFromDatabase: GeofenceInstance[] = [];
     geofenceCollection: GeofenceInstance[] = [];
-    private orderChangeDisabled: boolean = true;
     private awaitingResponse: boolean = false;
-    private walkNameInput: string = 'New walk';
+    private walkNameInput: string = '';
+    private geofencesAdded: boolean = false;
 
     ngOnInit() {
         if (localStorage.getItem('username') !== 'admin') {
@@ -73,6 +73,14 @@ export class WalkNewPage implements OnInit {
                 });
             }
         }
+    }
+
+    private checkIfAddedGeofences() {
+        if (this.geofenceCollection.length > 0) {
+            this.geofencesAdded = true;
+            return;
+        }
+        this.geofencesAdded = false;
     }
 
     private navigateToWalkList() {
@@ -128,17 +136,13 @@ export class WalkNewPage implements OnInit {
     private async addLocationToWalk(fence: GeofenceInstance, index: number) {
         this.geofenceCollection.push(fence);
         this.geofencesFromDatabase.splice(index, 1);
+        this.checkIfAddedGeofences();
 
     }
 
     private async removeLocationFromWalk(fence, index) {
         this.geofencesFromDatabase.push(fence);
         this.geofenceCollection.splice(index, 1);
-    }
-
-    private changeOrder() {
-        setTimeout(() => {
-            this.orderChangeDisabled = this.orderChangeDisabled ? false : true;
-        }, 0);
+        this.checkIfAddedGeofences();
     }
 }
