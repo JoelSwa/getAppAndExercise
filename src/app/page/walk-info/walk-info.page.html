@@ -3,13 +3,13 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>walk-info</ion-title>
+        <ion-title>{{walk.name}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
-    <ion-label class="labelTest">{{walk.name}}</ion-label>
+    <ion-label class="label-medium-center">Locations: </ion-label>
     <ion-list>
         <ion-item *ngFor="let fence of walk.geofences">
             <ion-label>{{fence.name}}</ion-label>
