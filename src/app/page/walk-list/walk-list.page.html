@@ -8,17 +8,20 @@
 </ion-header>
 
 <ion-content>
-    <ion-item (click)="navigateToWalkNew()">
-        <ion-label class="labelTest">
-            Create new walk
-        </ion-label>
-    </ion-item>
+    <ion-card>
+        <ion-item (click)="navigateToWalkNew()">
+            <ion-label class="label-medium-center">
+                Create new walk
+            </ion-label>
+        </ion-item>
 
-    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+        <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+    </ion-card>
 
     <ion-list>
         <ion-item *ngFor="let walk of walksFromDatabase" (click)="goToWalk(walk)">
             <ion-label>{{walk.name}}</ion-label>
         </ion-item>
     </ion-list>
+
 </ion-content>
