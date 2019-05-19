@@ -19,11 +19,11 @@ export class LocationNewPage implements OnInit {
         private http: HttpClient) {
     }
 
-    private lat: number = 59.316294;
-    private long: number = 18.235449;
-    private name: string = 'Home';
+    private name: string = '';
+    private lat: string = "";
+    private long: string = "";
+    private radius: string = "";
     private transition: number = 1;
-    private radius: number = 100;
     private awaitingResponse: boolean = false;
 
 
@@ -62,41 +62,45 @@ export class LocationNewPage implements OnInit {
     private saveGeofence() {
         if (localStorage.getItem('username')) {
             if (!this.awaitingResponse) {
-                let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences', {
-                    username: localStorage.getItem('username'),
-                    name: this.name,
-                    latitude: this.lat,
-                    longitude: this.long,
-                    radius: this.radius,
-                    transition: this.transition
-                });
-                setTimeout(() => {
-                    this.awaitingResponse = true;
-                }, 0);
-                this.http.request(req).pipe(
-                    timeout(7000),
-                    map((response: any) => {
-                        this.awaitingResponse = false;
-                        return response;
-                    }),
-                    catchError(err => {
-                        this.awaitingResponse = false;
-                        if (err instanceof TimeoutError) {
-                            alert('Connection to server timed out');
-                            return throwError('Timeout Exception');
+                if (this.name && this.lat && this.long && this.radius) {
+                    let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences', {
+                        username: localStorage.getItem('username'),
+                        name: this.name,
+                        latitude: this.lat,
+                        longitude: this.long,
+                        radius: this.radius,
+                        transition: this.transition
+                    });
+                    setTimeout(() => {
+                        this.awaitingResponse = true;
+                    }, 0);
+                    this.http.request(req).pipe(
+                        timeout(7000),
+                        map((response: any) => {
+                            this.awaitingResponse = false;
+                            return response;
+                        }),
+                        catchError(err => {
+                            this.awaitingResponse = false;
+                            if (err instanceof TimeoutError) {
+                                alert('Connection to server timed out');
+                                return throwError('Timeout Exception');
+                            }
+                            return throwError(err);
+                        })
+                    ).subscribe((res: HttpResponse<any>) => {
+                        if (res.status === 201) {
+                            alert('Geofence added!');
                         }
-                        return throwError(err);
-                    })
-                ).subscribe((res: HttpResponse<any>) => {
-                    if (res.status === 201) {
-                        alert('Geofence added!');
-                    }
-                }, (error: HttpErrorResponse) => {
-                    if (error.status && error.error) {
-                        alert(error.error);
-                    }
-                    console.error(error);
-                });
+                    }, (error: HttpErrorResponse) => {
+                        if (error.status && error.error) {
+                            alert(error.error);
+                        }
+                        console.error(error);
+                    });
+                } else {
+                    alert("No field can be empty")
+                }
             }
         } else {
             alert('Was not able to authenticate user');

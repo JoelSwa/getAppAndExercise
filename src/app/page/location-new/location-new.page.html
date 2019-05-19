@@ -10,31 +10,27 @@
 </ion-header>
 
 <ion-content>
+    <label class="label-medium">A location is a position in the real world that creates an imagined circle around it.
+        Crossing the border of this circle will trigger the location, letting both you and your device know where
+        you've arrived.
+    </label>
+    <label class="label-medium">The radius sets how close you have to be for it to trigger.
+        It is recommended that you do not set it to less than 20 meters.</label>
     <ion-card>
-        <ion-input class="inputTest" id="geoName" placeholder="Name for geofence" clearInput="true"
+        <ion-input class="input-medium" id="geoName" placeholder="Name" clearInput="true"
                    readonly={{awaitingResponse}}
                    (keydown)="onEnterClick($event)" [(ngModel)]="name"></ion-input>
 
-        <ion-input class="inputTest" id="lat" clearInput="false" [(ngModel)]="lat"
-                   (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
+        <ion-input class="input-medium" id="lat" type="number" clearInput="false" [(ngModel)]="lat"
+                   (keydown)="onEnterClick($event)" readonly={{awaitingResponse}} placeholder="Latitude"></ion-input>
 
-        <ion-input class="inputTest" id="long" clearInput="false"
-                   [(ngModel)]="long" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
+        <ion-input class="input-medium" id="long" type="number" clearInput="false"
+                   [(ngModel)]="long" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}
+                   placeholder="Longitude"></ion-input>
 
-        <ion-select [(ngModel)]="radius" value="100" okText="Done" selectedText="Radius of geofence">
-            <ion-select-option value="50">50</ion-select-option>
-            <ion-select-option value="100">100</ion-select-option>
-            <ion-select-option value="150">150</ion-select-option>
-            <ion-select-option value="200">200</ion-select-option>
-            <ion-select-option value="250">250</ion-select-option>
-        </ion-select>
-
-        <ion-select [(ngModel)]="transition" value="Enter" okText="Done" cancelText="Dismiss"
-                    selectedText="Transition type">
-            <ion-select-option value=1>Enter</ion-select-option>
-            <ion-select-option value=2>Leave</ion-select-option>
-            <ion-select-option value=3>Both</ion-select-option>
-        </ion-select>
+        <ion-input class="input-medium" id="radius" type="number" clearInput="false"
+                   [(ngModel)]="radius" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}
+                   placeholder="Radius (meters)"></ion-input>
 
         <ion-button id="saveGeo" (click)="saveGeofence()" color="success">Save&nbsp;&nbsp;&nbsp;
             <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
