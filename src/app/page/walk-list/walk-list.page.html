@@ -29,7 +29,7 @@
 
     <ion-list>
         <ion-item *ngFor="let walk of walksFromDatabase" (click)="goToWalk(walk)">
-            <ion-label>{{walk.name}}</ion-label>
+            <ion-label class="list-label">{{walk.name}}</ion-label>
         </ion-item>
     </ion-list>
 
