@@ -14,10 +14,10 @@
             <ion-card-title>Log in or register</ion-card-title>
         </ion-card-header>
 
-        <ion-input id="usernameField" placeholder="Username" clearInput="true" [(ngModel)]="usernameInput"
+        <ion-input id="usernameField" class="input-medium" placeholder="Username" clearInput="true" [(ngModel)]="usernameInput"
                    (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
 
-        <ion-input id="passwordField" placeholder="Password" clearInput="true" type="password" clearOnEdit="false"
+        <ion-input id="passwordField" class="input-medium" placeholder="Password" clearInput="true" type="password" clearOnEdit="false"
                    [(ngModel)]="passwordInput" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}></ion-input>
 
         <ion-button id="logInButton" (click)="logIn()" size="block" color="success">Log in&nbsp;&nbsp;&nbsp;
