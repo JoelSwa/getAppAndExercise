@@ -9,15 +9,15 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="card-background-page">
-
-    <ion-item (click)="navigateToLocationNew()">
-        <ion-label class="labelTest">
-            Add new location
-        </ion-label>
-    </ion-item>
-
-    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+<ion-content>
+    <ion-card>
+        <ion-item (click)="navigateToLocationNew()">
+            <ion-label class="label-medium-center">
+                Add new location
+            </ion-label>
+        </ion-item>
+        <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+    </ion-card>
 
     <ion-list>
         <ion-item *ngFor="let fence of geofencesFromDatabase">
