@@ -7,17 +7,13 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card>
-        <ion-item (click)="navigateToWalkNew()">
-            <ion-label class="label-medium-center">
-                Create new walk
-            </ion-label>
-        </ion-item>
-
-        <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+<ion-content class="card-background-page">
+    <ion-card (click)="navigateToWalkNew()">
+        <img src="assets/img/new.jpg"/>
+        <div class="card-title">Create new walk</div>
     </ion-card>
 
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
     <ion-refresher pulling-text="Pull to refresh" (ionRefresh)="doRefresh($event)" pullMax="120">
         <ion-refresher-content
                 pullingIcon="arrow-dropdown"

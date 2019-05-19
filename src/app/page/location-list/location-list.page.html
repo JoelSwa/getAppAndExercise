@@ -9,15 +9,12 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card>
-        <ion-item (click)="navigateToLocationNew()">
-            <ion-label class="label-medium-center">
-                Add new location
-            </ion-label>
-        </ion-item>
-        <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+<ion-content class="card-background-page">
+    <ion-card (click)="navigateToLocationNew()">
+        <img src="assets/img/new.jpg"/>
+        <div class="card-title">Create new location</div>
     </ion-card>
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
 
     <ion-refresher pulling-text="Pull to refresh" pullMax="120" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
