@@ -16,12 +16,16 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'Regions',
-      url: '/region-list'
-    },
-    {
       title: 'Locations',
       url: '/location-list'
+    },
+    {
+      title: 'Walks',
+      url: '/walk-list'
+    },
+    {
+      title: 'Regions',
+      url: '/region-list'
     },
     {
       title: 'Log out',
