@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Location info</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-input class="input-medium" placeholder="Name" clearInput="true"
+                   readonly={{awaitingResponse}}
+                   (keydown)="onEnterClick($event)" [(ngModel)]="name"></ion-input>
+
+        <ion-input class="input-medium" type="number" clearInput="false" [(ngModel)]="lat"
+                   (keydown)="onEnterClick($event)" readonly={{awaitingResponse}} placeholder="Latitude"></ion-input>
+
+        <ion-input class="input-medium" type="number" clearInput="false"
+                   [(ngModel)]="long" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}
+                   placeholder="Longitude"></ion-input>
+
+        <ion-input class="input-medium" type="number" clearInput="false"
+                   [(ngModel)]="radius" (keydown)="onEnterClick($event)" readonly={{awaitingResponse}}
+                   placeholder="Radius (meters)"></ion-input>
+
+        <ion-button (click)="saveGeofence()" color="success">Save&nbsp;&nbsp;&nbsp;
+            <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+        </ion-button>
+
+        <ion-button (click)="navigateToLocationList()" color="danger">Cancel</ion-button>
+    </ion-card>
+</ion-content>
