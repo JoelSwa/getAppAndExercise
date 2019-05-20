@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Update walk</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-label class="label-medium">Here you can update the walk if you want, by changing its name and/or locations.
+    </ion-label>
+
+    <ion-card>
+        <ion-input id="update-name-of-walk-input" class="input-medium" [(ngModel)]="walkNameInput"
+                   placeholder="Name of walk"></ion-input>
+
+        <ion-label id="update-no-locations-added" *ngIf="!geofencesAdded">(no locations selected)</ion-label>
+
+        <ion-list>
+            <ion-reorder-group (ionItemReorder)="reorderItems($event)" disabled="false">
+                <ion-item *ngFor="let fence of geofenceCollection; let i = index"
+                          (click)="removeLocationFromWalk(fence, i)">
+                    <ion-label class="list-label">{{fence.name}}</ion-label>
+                    <ion-reorder></ion-reorder>
+                </ion-item>
+            </ion-reorder-group>
+        </ion-list>
+
+        <ion-button color="success" (click)="saveWalk()">Save walk</ion-button>
+
+        <ion-button id="walkNewCancel" (click)="navigateToWalkList()" color="danger">Cancel</ion-button>
+    </ion-card>
+
+    <ion-label class="label-medium-center">Available locations</ion-label>
+
+    <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
+
+    <ion-list>
+        <ion-item *ngFor="let fence of geofencesFromDatabase; let i = index" (click)="addLocationToWalk(fence, i)">
+            <ion-label class="list-label">{{fence.name}}</ion-label>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
