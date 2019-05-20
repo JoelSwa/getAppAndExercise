@@ -1,21 +1,22 @@
 /*tslint:disable*/
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {WalkInstance} from '../../model/walk-instance';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class WalkService {
 
-  constructor() { }
+    constructor() {
+    }
 
-  private activeWalk: WalkInstance
+    private activeWalk: WalkInstance;
 
-  public setActiveWalk(walk: WalkInstance){
-    this.activeWalk = walk;
-  }
+    public setActiveWalk(walk: WalkInstance) {
+        this.activeWalk = walk;
+    }
 
-  public getActiveWalk() : WalkInstance {
-    return this.activeWalk
-  }
+    public getActiveWalk(): WalkInstance {
+        return this.activeWalk;
+    }
 }
