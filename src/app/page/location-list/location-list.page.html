@@ -25,7 +25,7 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-list>
-        <ion-item *ngFor="let fence of geofencesFromDatabase">
+        <ion-item *ngFor="let fence of geofencesFromDatabase" (click)="navigateToGeofenceInfo(fence)">
             <ion-label class="list-label">{{fence.name}}</ion-label>
         </ion-item>
     </ion-list>

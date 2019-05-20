@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
 import {GeofenceInstance} from '../../model/geofence-instance';
+import {GeofenceInstanceService} from '../../service/geofence/geofence-instance.service';
 
 @Component({
     selector: 'app-location-list',
@@ -15,7 +16,8 @@ export class LocationListPage implements OnInit {
 
     constructor(
         private navCtrl: NavController,
-        private http: HttpClient
+        private http: HttpClient,
+        private geofenceInstanceService: GeofenceInstanceService
     ) {
     }
 
@@ -28,10 +30,10 @@ export class LocationListPage implements OnInit {
     }
 
     ngOnInit() {
-        this.getGeofences()
+        this.getGeofences();
     }
 
-    private getGeofences(){
+    private getGeofences() {
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
                 username: localStorage.getItem('username')
@@ -55,11 +57,11 @@ export class LocationListPage implements OnInit {
                 })
             ).subscribe((res: HttpResponse<any>) => {
                 if (res.status === 200) {
-                    console.log("status === 200")
-                    this.geofencesFromDatabase = res.body
-                    console.log("Geofences fetched from server")
+                    console.log('status === 200');
+                    this.geofencesFromDatabase = res.body;
+                    console.log('Geofences fetched from server');
                 }
-                console.log("status !== 200")
+                console.log('status !== 200');
             }, (error: HttpErrorResponse) => {
                 if (error.status && error.error) {
                     alert(error.error);
@@ -69,8 +71,17 @@ export class LocationListPage implements OnInit {
         }
     }
 
-    private async doRefresh(event){
-        this.getGeofences()
+    private navigateToGeofenceInfo(geofence: GeofenceInstance) {
+        if (geofence) {
+            this.geofenceInstanceService.setSingleGeofenceInfo(geofence);
+            this.navCtrl.navigateForward('location-info');
+        } else {
+            alert('Geofence not found');
+        }
+    }
+
+    private async doRefresh(event) {
+        this.getGeofences();
         event.target.complete();
     }
 }
