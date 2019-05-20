@@ -53,6 +53,7 @@ export class WalkInfoPage implements OnInit {
                     if (res.status === 200) {
                         console.log("status === 200")
                         this.walk.geofences = res.body
+                        this.walkService.setActiveWalk(this.walk)
                         console.log("Geofences fetched from server")
                     }
                     console.log("status !== 200")
@@ -82,4 +83,7 @@ export class WalkInfoPage implements OnInit {
         this.navCtrl.navigateBack('walk-list');
     }
 
+    private navigateToWalkUpdate(){
+        this.navCtrl.navigateForward('walk-update')
+    }
 }
