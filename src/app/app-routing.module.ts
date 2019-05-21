@@ -49,10 +49,6 @@ const routes: Routes = [
         loadChildren: './page/walk-new/walk-new.module#WalkNewPageModule'
     },
     {
-        path: 'walk-active',
-        loadChildren: './page/walk-active/walk-active.module#WalkActivePageModule'
-    },
-    {
         path: 'walk-info',
         loadChildren: './page/walk-info/walk-info.module#WalkInfoPageModule'
     },
