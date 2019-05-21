@@ -32,36 +32,6 @@ export class GeofenceService {
         }
     };
 
-    public addGeofenceTest(name, lat, long, radius, transition: number) {
-        if (transition < 0 || transition > 3) {
-            transition = 3;
-        }
-        let fence = {
-            id: name, //any unique ID
-            latitude: lat, //center of geofence radius
-            longitude: long,
-            radius: radius, //radius to edge of geofence in meters
-            transitionType: transition, //see 'Transition Types' below
-            notification: { //notification settings
-                id: name, //any unique ID
-                title: 'Geofence crossed', //notification title
-                text: 'You\'ve just arrived at ' + name, //notification body
-                openAppOnClick: true //open app when notification is tapped
-            }
-        };
-        this.geofence.addOrUpdate(fence).then(
-            () => {
-                alert('Geofence added');
-                console.log('Geofence added');
-                // this.idTemp++;
-            },
-            (err) => {
-                console.log('Geofence failed to add');
-                console.log(err);
-            }
-        );
-    }
-
     private shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
