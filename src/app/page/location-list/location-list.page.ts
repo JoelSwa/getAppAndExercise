@@ -26,7 +26,7 @@ export class LocationListPage implements OnInit {
     geofencesFromDatabase: GeofenceInstance[];
 
     navigateToLocationNew() {
-        this.navCtrl.navigateForward('location-new');
+        this.navCtrl.navigateBack('location-new');
     }
 
     ngOnInit() {
@@ -74,7 +74,7 @@ export class LocationListPage implements OnInit {
     private navigateToGeofenceInfo(geofence: GeofenceInstance) {
         if (geofence) {
             this.geofenceInstanceService.setSingleGeofenceInfo(geofence);
-            this.navCtrl.navigateForward('location-info');
+            this.navCtrl.navigateBack('location-info');
         } else {
             alert('Geofence not found');
         }
