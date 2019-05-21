@@ -78,7 +78,7 @@ export class LocationInfoPage implements OnInit {
                     ).subscribe((res: HttpResponse<any>) => {
                         if (res.status === 201) {
                             alert('Location updated!');
-                            this.navCtrl.navigateBack("location-list");
+                            this.navCtrl.navigateBack('location-list');
                         }
                     }, (error: HttpErrorResponse) => {
                         if (error.status && error.error) {
@@ -87,7 +87,7 @@ export class LocationInfoPage implements OnInit {
                         console.error(error);
                     });
                 } else {
-                    alert("No field can be empty")
+                    alert('No field can be empty');
                 }
             }
         } else {
@@ -98,5 +98,51 @@ export class LocationInfoPage implements OnInit {
 
     private navigateToLocationList() {
         this.navCtrl.navigateBack('location-list');
+    }
+
+    private deleteGeofence() {
+        if (localStorage.getItem('username')) {
+            if (!this.awaitingResponse) {
+                if (this.name && this.lat && this.long && this.radius) {
+                    let req = new HttpRequest('PUT', 'http://192.168.1.71:8080/geofences/delete', {
+                        username: localStorage.getItem('username'),
+                        id: this.geofence.id
+                    });
+                    setTimeout(() => {
+                        this.awaitingResponse = true;
+                    }, 0);
+                    this.http.request(req).pipe(
+                        timeout(7000),
+                        map((response: any) => {
+                            this.awaitingResponse = false;
+                            return response;
+                        }),
+                        catchError(err => {
+                            this.awaitingResponse = false;
+                            if (err instanceof TimeoutError) {
+                                alert('Connection to server timed out');
+                                return throwError('Timeout Exception');
+                            }
+                            return throwError(err);
+                        })
+                    ).subscribe((res: HttpResponse<any>) => {
+                        if (res.status === 204) {
+                            alert('Location deleted!');
+                            this.navCtrl.navigateBack('location-list');
+                        }
+                    }, (error: HttpErrorResponse) => {
+                        if (error.status && error.error) {
+                            alert(error.error);
+                        }
+                        console.error(error);
+                    });
+                } else {
+                    alert('No field can be empty');
+                }
+            }
+        } else {
+            alert('Was not able to authenticate user');
+            this.navCtrl.navigateRoot('login');
+        }
     }
 }
