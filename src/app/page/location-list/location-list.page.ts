@@ -21,7 +21,7 @@ export class LocationListPage implements OnInit {
     ) {
     }
 
-    awaitingResponse: boolean = false;
+    private awaitingResponse: boolean = false;
 
     geofencesFromDatabase: GeofenceInstance[];
 
