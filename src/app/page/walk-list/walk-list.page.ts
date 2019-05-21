@@ -30,6 +30,10 @@ export class WalkListPage implements OnInit {
         this.getWalks()
     }
 
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
     private getWalks(){
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/walks/all', {

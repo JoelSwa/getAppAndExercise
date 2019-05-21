@@ -72,6 +72,10 @@ export class WalkInfoPage implements OnInit {
         }
     }
 
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
     private deleteWalk() {
         if (!this.awaitingResponse) {
             let req = new HttpRequest('PUT', 'http://192.168.1.71:8080/walks/delete', {

@@ -91,6 +91,10 @@ export class WalkUpdatePage implements OnInit {
         }
     }
 
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
     private checkIfAddedGeofences() {
         if (this.geofenceCollection.length > 0) {
             this.geofencesAdded = true;

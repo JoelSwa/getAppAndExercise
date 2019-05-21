@@ -41,6 +41,10 @@ export class LocationInfoPage implements OnInit {
         }
     }
 
+    private goToHome(){
+        this.navCtrl.navigateBack("home")
+    }
+
     private onEnterClick(event) {
 
     }

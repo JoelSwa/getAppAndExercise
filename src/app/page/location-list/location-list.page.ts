@@ -33,6 +33,10 @@ export class LocationListPage implements OnInit {
         this.getGeofences();
     }
 
+    private goToHome(){
+        this.navCtrl.navigateBack("home")
+    }
+
     private getGeofences() {
         if (!this.awaitingResponse) {
             let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {

@@ -20,12 +20,18 @@ export class LocationNewPage implements OnInit {
     }
 
     private name: string = '';
-    private lat: string = "";
-    private long: string = "";
-    private radius: string = "";
+    private lat: string = '';
+    private long: string = '';
+    private radius: string = '';
     private transition: number = 1;
     private awaitingResponse: boolean = false;
 
+    ngOnInit() {
+    }
+
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
 
     public onEnterClick(event) {
         if (event.key === 'Enter') {
@@ -91,7 +97,7 @@ export class LocationNewPage implements OnInit {
                     ).subscribe((res: HttpResponse<any>) => {
                         if (res.status === 201) {
                             alert('Geofence added!');
-                            this.navCtrl.navigateBack("location-list")
+                            this.navCtrl.navigateBack('location-list');
                         }
                     }, (error: HttpErrorResponse) => {
                         if (error.status && error.error) {
@@ -100,7 +106,7 @@ export class LocationNewPage implements OnInit {
                         console.error(error);
                     });
                 } else {
-                    alert("No field can be empty")
+                    alert('No field can be empty');
                 }
             }
         } else {
@@ -111,8 +117,5 @@ export class LocationNewPage implements OnInit {
 
     private navigateToLocationList() {
         this.navCtrl.navigateBack('location-list');
-    }
-
-    ngOnInit() {
     }
 }
