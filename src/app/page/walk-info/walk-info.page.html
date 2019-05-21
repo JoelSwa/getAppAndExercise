@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+
     <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
     <ion-label class="label-medium-center">Locations: </ion-label>
     <ion-list>
@@ -15,10 +16,10 @@
             <ion-label>{{fence.name}}</ion-label>
         </ion-item>
     </ion-list>
-    <ion-button (click)="startFixedTurnWalk()">Start walk</ion-button>
-    <ion-button (click)="startShuffledWalk()">Start shuffled walk</ion-button>
-    <ion-button (click)="navigateToWalkList()">Back</ion-button>
+    <ion-button (click)="startFixedTurnWalk()" color="success">Start walk</ion-button>
+    <ion-button (click)="startShuffledWalk()" color="success">Start shuffled walk</ion-button>
     <ion-button (click)="navigateToWalkUpdate()">Update</ion-button>
     <ion-button (click)="deleteWalk()" color="danger">Delete</ion-button>
+    <ion-button (click)="navigateToWalkList()">Back</ion-button>
 
 </ion-content>
