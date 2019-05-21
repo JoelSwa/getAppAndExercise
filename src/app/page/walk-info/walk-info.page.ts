@@ -22,7 +22,7 @@ export class WalkInfoPage implements OnInit {
     }
 
     private walk: WalkInstance;
-    private awaitingResponse: boolean = false
+    private awaitingResponse: boolean = false;
 
     ngOnInit() {
         if (this.walkService.getActiveWalk()) {
@@ -51,12 +51,12 @@ export class WalkInfoPage implements OnInit {
                     })
                 ).subscribe((res: HttpResponse<any>) => {
                     if (res.status === 200) {
-                        console.log("status === 200")
-                        this.walk.geofences = res.body
-                        this.walkService.setActiveWalk(this.walk)
-                        console.log("Geofences fetched from server")
+                        console.log('status === 200');
+                        this.walk.geofences = res.body;
+                        this.walkService.setActiveWalk(this.walk);
+                        console.log('Geofences fetched from server');
                     }
-                    console.log("status !== 200")
+                    console.log('status !== 200');
                 }, (error: HttpErrorResponse) => {
                     if (error.status && error.error) {
                         alert(error.error);
@@ -70,12 +70,53 @@ export class WalkInfoPage implements OnInit {
         }
     }
 
+    private deleteWalk() {
+        if (!this.awaitingResponse) {
+            let req = new HttpRequest('PUT', 'http://192.168.1.71:8080/walks/delete', {
+                username: localStorage.getItem('username'),
+                id: this.walk.id
+            });
+            setTimeout(() => {
+                this.awaitingResponse = true;
+            }, 0);
+            this.http.request(req).pipe(
+                timeout(7000),
+                map((response: any) => {
+                    this.awaitingResponse = false;
+                    return response;
+                }),
+                catchError(err => {
+                    this.awaitingResponse = false;
+                    if (err instanceof TimeoutError) {
+                        alert('Connection to server timed out');
+                        return throwError('Timeout Exception');
+                    }
+                    return throwError(err);
+                })
+            ).subscribe((res: HttpResponse<any>) => {
+                if (res.status === 204) {
+                    console.log('status === 204');
+                    this.walkService.setActiveWalk(null);
+                    alert("Walk deleted!")
+                    this.navCtrl.navigateBack("walk-list")
+                    console.log('Geofences fetched from server');
+                }
+                console.log('status !== 204');
+            }, (error: HttpErrorResponse) => {
+                if (error.status && error.error) {
+                    alert(error.error);
+                }
+                console.error(error);
+            });
+        }
+    }
+
     private startFixedTurnWalk() {
-        this.geofenceService.startFixedTurnWalk(this.walk)
+        this.geofenceService.startFixedTurnWalk(this.walk);
     }
 
     private startShuffledWalk() {
-        this.geofenceService.startShuffledWalk(this.walk)
+        this.geofenceService.startShuffledWalk(this.walk);
     }
 
     private navigateToWalkList() {
@@ -83,7 +124,7 @@ export class WalkInfoPage implements OnInit {
         this.navCtrl.navigateBack('walk-list');
     }
 
-    private navigateToWalkUpdate(){
-        this.navCtrl.navigateForward('walk-update')
+    private navigateToWalkUpdate() {
+        this.navCtrl.navigateForward('walk-update');
     }
 }
