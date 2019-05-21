@@ -2,11 +2,12 @@
 import {Component, OnInit} from '@angular/core';
 import {WalkInstance} from '../../model/walk-instance';
 import {WalkService} from '../../service/walk/walk.service';
-import {NavController} from '@ionic/angular';
+import {AlertController, NavController} from '@ionic/angular';
 import {HttpClient, HttpErrorResponse, HttpRequest, HttpResponse} from '@angular/common/http';
 import {catchError, map, timeout} from 'rxjs/operators';
 import {throwError, TimeoutError} from 'rxjs';
 import {GeofenceService} from '../../service/geofence/geofence.service';
+import {AlertButton} from '@ionic/core';
 
 @Component({
     selector: 'app-walk-info',
@@ -18,7 +19,8 @@ export class WalkInfoPage implements OnInit {
     constructor(private walkService: WalkService,
                 private navCtrl: NavController,
                 private http: HttpClient,
-                private geofenceService: GeofenceService) {
+                private geofenceService: GeofenceService,
+                private alertCtrl: AlertController) {
     }
 
     private walk: WalkInstance;
@@ -97,8 +99,8 @@ export class WalkInfoPage implements OnInit {
                 if (res.status === 204) {
                     console.log('status === 204');
                     this.walkService.setActiveWalk(null);
-                    alert("Walk deleted!")
-                    this.navCtrl.navigateBack("walk-list")
+                    alert('Walk deleted!');
+                    this.navCtrl.navigateBack('walk-list');
                     console.log('Geofences fetched from server');
                 }
                 console.log('status !== 204');
@@ -111,12 +113,28 @@ export class WalkInfoPage implements OnInit {
         }
     }
 
-    private startFixedTurnWalk() {
-        this.geofenceService.startFixedTurnWalk(this.walk);
-    }
-
-    private startShuffledWalk() {
-        this.geofenceService.startShuffledWalk(this.walk);
+    private async startWalk() {
+        let alertButtons: AlertButton[] = [
+            {
+                text: 'Current order', handler: () => {
+                    this.geofenceService.startFixedTurnWalk(this.walk);
+                }
+            },
+            {
+                text: 'Shuffled', handler: () => {
+                    this.geofenceService.startShuffledWalk(this.walk);
+                }
+            },
+            {
+                text: 'Cancel'
+            }
+        ];
+        let startWalkAlert = await this.alertCtrl.create({
+            header: 'Start ' + this.walk.name,
+            message: 'What should the order of the locations be for this walk?',
+            buttons: alertButtons
+        });
+        await startWalkAlert.present();
     }
 
     private navigateToWalkList() {
