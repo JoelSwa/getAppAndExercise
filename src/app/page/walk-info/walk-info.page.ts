@@ -125,6 +125,6 @@ export class WalkInfoPage implements OnInit {
     }
 
     private navigateToWalkUpdate() {
-        this.navCtrl.navigateForward('walk-update');
+        this.navCtrl.navigateBack('walk-update');
     }
 }
