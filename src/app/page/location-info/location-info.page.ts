@@ -28,6 +28,14 @@ export class LocationInfoPage implements OnInit {
     private radius: number;
 
     ngOnInit() {
+        this.loadGeofence();
+    }
+
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
+    private loadGeofence() {
         if (this.geofenceInstanceService.getSingleGeofenceInfo()) {
             this.geofence = this.geofenceInstanceService.getSingleGeofenceInfo();
             this.id = this.geofence.id;
@@ -39,10 +47,6 @@ export class LocationInfoPage implements OnInit {
             alert('Error: Geofence not found. Returning to Location List');
             this.navCtrl.navigateBack('location-list');
         }
-    }
-
-    private goToHome() {
-        this.navCtrl.navigateBack('home');
     }
 
     private onEnterClick(event) {
