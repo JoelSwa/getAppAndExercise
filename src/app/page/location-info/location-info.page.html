@@ -28,6 +28,8 @@
             <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
         </ion-button>
 
+        <ion-button (click)="deleteGeofence()" color="danger">Delete</ion-button>
+
         <ion-button (click)="navigateToLocationList()" color="danger">Cancel</ion-button>
     </ion-card>
 </ion-content>
