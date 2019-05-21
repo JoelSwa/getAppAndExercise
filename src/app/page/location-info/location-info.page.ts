@@ -41,12 +41,12 @@ export class LocationInfoPage implements OnInit {
         }
     }
 
-    private goToHome(){
-        this.navCtrl.navigateBack("home")
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
     }
 
     private onEnterClick(event) {
-
+        //TODO: Make sure the right fields get focus when user clicks "Enter"
     }
 
     private saveGeofence() {
