@@ -22,7 +22,7 @@
                    [(ngModel)]="passwordInput" (keydown)="onEnterClick($event)"
                    readonly={{awaitingResponse}}></ion-input>
 
-        <ion-button id="logInButton" (click)="logIn()" size="block" color="success">Log in&nbsp;&nbsp;&nbsp;
+        <ion-button id="logInButton" (click)="logIn()" size="block">Log in&nbsp;&nbsp;&nbsp;
             <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
         </ion-button>
 
