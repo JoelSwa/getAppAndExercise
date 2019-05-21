@@ -23,7 +23,7 @@ export class WalkListPage implements OnInit {
     private awaitingResponse: boolean = false;
 
     public navigateToWalkNew() {
-        this.navCtrl.navigateForward('walk-new');
+        this.navCtrl.navigateBack('walk-new');
     }
 
     ngOnInit() {
@@ -70,7 +70,7 @@ export class WalkListPage implements OnInit {
 
     private goToWalk(walk: WalkInstance) {
         this.walkService.setActiveWalk(walk)
-        this.navCtrl.navigateForward("walk-info")
+        this.navCtrl.navigateBack("walk-info")
     }
 
     private async doRefresh(event){
