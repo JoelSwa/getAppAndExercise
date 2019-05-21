@@ -14,7 +14,7 @@
     </ion-card>
 
     <ion-spinner *ngIf="awaitingResponse"></ion-spinner>
-    <ion-refresher pulling-text="Pull to refresh" (ionRefresh)="doRefresh($event)" pullMax="120">
+    <ion-refresher pulling-text="Pull to refresh" (ionRefresh)="doRefresh($event)" pullMax="120" closeDuration="550ms">
         <ion-refresher-content
                 pullingIcon="arrow-dropdown"
                 pullingText="Pull to refresh"
