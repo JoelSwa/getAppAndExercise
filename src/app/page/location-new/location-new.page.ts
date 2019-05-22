@@ -11,7 +11,7 @@ import {NavController} from '@ionic/angular';
     templateUrl: './location-new.page.html',
     styleUrls: ['./location-new.page.scss'],
 })
-export class LocationNewPage implements OnInit {
+export class LocationNewPage {
 
     constructor(
         private navCtrl: NavController,
@@ -26,8 +26,6 @@ export class LocationNewPage implements OnInit {
     private transition: number = 1;
     private awaitingResponse: boolean = false;
 
-    ngOnInit() {
-    }
 
     private goToHome() {
         this.navCtrl.navigateBack('home');

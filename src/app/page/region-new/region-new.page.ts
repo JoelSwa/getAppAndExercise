@@ -6,12 +6,9 @@ import {NavController} from '@ionic/angular';
   templateUrl: './region-new.page.html',
   styleUrls: ['./region-new.page.scss'],
 })
-export class RegionNewPage implements OnInit {
+export class RegionNewPage {
 
   constructor(private navCtrl: NavController) { }
-
-  ngOnInit() {
-  }
 
   private goToHome() {
     this.navCtrl.navigateBack('home');

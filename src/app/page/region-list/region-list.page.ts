@@ -7,13 +7,10 @@ import {NavController} from '@ionic/angular';
     templateUrl: './region-list.page.html',
     styleUrls: ['./region-list.page.scss'],
 })
-export class RegionListPage implements OnInit {
+export class RegionListPage {
 
     constructor(
         private navCtrl: NavController) {
-    }
-
-    ngOnInit() {
     }
 
     private goToHome() {

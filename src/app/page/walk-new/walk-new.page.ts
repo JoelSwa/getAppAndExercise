@@ -24,6 +24,14 @@ export class WalkNewPage implements OnInit {
     private geofencesAdded: boolean = false;
 
     ngOnInit() {
+        this.getAllGeofencesForUser();
+    }
+
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
+    private getAllGeofencesForUser() {
         if (localStorage.getItem('username') !== 'admin') {
             if (!this.awaitingResponse) {
                 let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
@@ -73,10 +81,6 @@ export class WalkNewPage implements OnInit {
                 });
             }
         }
-    }
-
-    private goToHome() {
-        this.navCtrl.navigateBack('home');
     }
 
     private checkIfAddedGeofences() {

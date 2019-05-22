@@ -27,6 +27,14 @@ export class WalkInfoPage implements OnInit {
     private awaitingResponse: boolean = false;
 
     ngOnInit() {
+        this.getGeofencesForActiveWalk();
+    }
+
+    private goToHome() {
+        this.navCtrl.navigateBack('home');
+    }
+
+    private getGeofencesForActiveWalk() {
         if (this.walkService.getActiveWalk()) {
             this.walk = this.walkService.getActiveWalk();
             if (!this.awaitingResponse) {
@@ -70,10 +78,6 @@ export class WalkInfoPage implements OnInit {
             alert('Error: walk not found');
             this.navCtrl.navigateBack('walk-list');
         }
-    }
-
-    private goToHome() {
-        this.navCtrl.navigateBack('home');
     }
 
     private deleteWalk() {

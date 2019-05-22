@@ -33,61 +33,65 @@ export class WalkUpdatePage implements OnInit {
             this.walkNameInput = this.activeWalk.name;
             this.geofenceCollection = this.activeWalk.geofences;
             this.checkIfAddedGeofences();
-            if (localStorage.getItem('username') !== 'admin') {
-                if (!this.awaitingResponse) {
-                    let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
-                        username: localStorage.getItem('username')
-                    });
-                    setTimeout(() => {
-                        this.awaitingResponse = true;
-                    }, 0);
-                    this.http.request(req).pipe(
-                        timeout(7000),
-                        map((response: any) => {
-                            this.awaitingResponse = false;
-                            return response;
-                        }),
-                        catchError(err => {
-                            this.awaitingResponse = false;
-                            if (err instanceof TimeoutError) {
-                                alert('Connection to server timed out');
-                                return throwError('Timeout Exception');
-                            }
-                            return throwError(err);
-                        })
-                    ).subscribe((res: HttpResponse<any>) => {
-                        if (res.status === 200) {
-                            console.log('status === 200');
-                            this.geofencesFromDatabase = res.body;
-                            if (this.activeWalk.geofences.length > 0) {
-                                this.removeAddedLocationsFromDatabaseList(this.activeWalk.geofences);
-                            }
-                            console.log('Geofences fetched from server');
-                        }
-                        console.log('status !== 200');
-                    }, (error: HttpErrorResponse) => {
-                        if (error.status && error.error) {
-                            alert(error.error);
-                        }
-                        console.error(error);
-                    });
-                }
-            } else {
-                //ONLY FOR OFFLINE TESTING PURPOSES
-                for (let i = 0; i < 5; i++) {
-                    this.geofencesFromDatabase.push({
-                        id: i,
-                        name: 'Test location ' + i,
-                        latitude: 1515,
-                        longitude: 15215,
-                        radius: 142,
-                        transition: 3
-                    });
-                }
-            }
+            this.getAllGeofencesForUser();
         } else {
             alert('Error: walk not found. Redirecting to Walk list');
             this.navCtrl.navigateBack('walk-list');
+        }
+    }
+
+    private getAllGeofencesForUser() {
+        if (localStorage.getItem('username') !== 'admin') {
+            if (!this.awaitingResponse) {
+                let req = new HttpRequest('POST', 'http://192.168.1.71:8080/geofences/all', {
+                    username: localStorage.getItem('username')
+                });
+                setTimeout(() => {
+                    this.awaitingResponse = true;
+                }, 0);
+                this.http.request(req).pipe(
+                    timeout(7000),
+                    map((response: any) => {
+                        this.awaitingResponse = false;
+                        return response;
+                    }),
+                    catchError(err => {
+                        this.awaitingResponse = false;
+                        if (err instanceof TimeoutError) {
+                            alert('Connection to server timed out');
+                            return throwError('Timeout Exception');
+                        }
+                        return throwError(err);
+                    })
+                ).subscribe((res: HttpResponse<any>) => {
+                    if (res.status === 200) {
+                        console.log('status === 200');
+                        this.geofencesFromDatabase = res.body;
+                        if (this.activeWalk.geofences.length > 0) {
+                            this.removeAddedLocationsFromDatabaseList(this.activeWalk.geofences);
+                        }
+                        console.log('Geofences fetched from server');
+                    }
+                    console.log('status !== 200');
+                }, (error: HttpErrorResponse) => {
+                    if (error.status && error.error) {
+                        alert(error.error);
+                    }
+                    console.error(error);
+                });
+            }
+        } else {
+            //ONLY FOR OFFLINE TESTING PURPOSES
+            for (let i = 0; i < 5; i++) {
+                this.geofencesFromDatabase.push({
+                    id: i,
+                    name: 'Test location ' + i,
+                    latitude: 1515,
+                    longitude: 15215,
+                    radius: 142,
+                    transition: 3
+                });
+            }
         }
     }
 

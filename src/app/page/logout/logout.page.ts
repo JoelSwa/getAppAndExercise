@@ -7,12 +7,9 @@ import {NavController} from '@ionic/angular';
     templateUrl: './logout.page.html',
     styleUrls: ['./logout.page.scss'],
 })
-export class LogoutPage implements OnInit {
+export class LogoutPage {
 
     constructor(private navCtrl: NavController) {
-    }
-
-    ngOnInit() {
     }
 
     private goToHome() {
